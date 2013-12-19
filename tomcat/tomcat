@@ -1,0 +1,105 @@
+#!/bin/sh
+#
+# Init file for Tomcat server daemon
+#
+# chkconfig: 2345 55 25
+# description: Tomcat server daemon
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+export CATALINA_HOME=/opt/apache-tomcat-6.0.35
+export JAVA_HOME=/opt/jdk1.6.0_38
+
+start()
+{
+      rm -rf $CATALINA_HOME/webapps/ROOT
+      rm -rf $CATALINA_HOME/vhost_*/webapps/ROOT
+      rm -rf $CATALINA_HOME/vhost_*/ROOT
+      rm -rf $CATALINA_HOME/vhosts/*/ROOT
+      rm -rf $CATALINA_HOME/work/*
+      sh $CATALINA_HOME/bin/catalina.sh start &
+      echo "tomcat startup."
+}
+
+stop()
+{
+    pid=`ps -ef|grep "java"|grep "$CATALINA_HOME"|awk '{print $2}'`
+    if [ "$pid" = "" ] ; then
+        echo "No tomcat alive."
+    else
+        sh $CATALINA_HOME/bin/shutdown.sh
+        echo "Wait for a moment please..."
+        sleep 5
+        pid=`ps -ef|grep "java"|grep "$CATALINA_HOME"|awk '{print $2}'`
+        if [ "$pid" = "" ] ; then
+            echo "No tomcat alive."
+        else
+            kill -9 $pid
+            echo "tomcat[$pid] shutdown."
+        fi
+    fi
+}
+
+deploy()
+{
+        java -jar $CATALINA_HOME/bin/deployer.jar
+}
+
+log()
+{       
+        tail -f $CATALINA_HOME/logs/catalina.out
+
+}
+
+
+RETVAL=0
+
+ARGV="$@"
+case "$1" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                stop
+				sleep 3
+                start
+                ;;
+        deploy)
+                deploy
+                ;;
+        redeploy)
+                deploy
+                stop
+                start
+                log
+                ;;
+        log)
+                log
+                ;;
+        backup)
+                echo "WARs backup."
+                ;;
+        rollback)
+                echo "WARs rollback."
+                ;;
+        help)
+                echo "Usage: $0 [OPTION]"
+                echo ""
+                echo "  start        start tomcat"
+                echo "  stop         stop tomcat"
+                echo "  help         display this help and exit"
+                echo ""
+                echo "  deploy      deploy new WARs"
+                echo "  backup      backup current WARs"
+                echo "  rollback    rollback with backup WARs"
+                ;;
+        *)
+                echo $"Usage: $0 {start|stop|restart|deploy|redeploy|log|backup|rollback}"
+                RETVAL=1
+esac
+exit $RETVAL
+
