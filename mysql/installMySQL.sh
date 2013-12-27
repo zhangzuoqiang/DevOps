@@ -63,6 +63,21 @@ cat >> /etc/my.cnf <<EOF
 
 
 [mysqld]
+server-id = 1
+log-ebin=mysql-bin      #同步事件的日志记录文件
+
+#binlog-do-db=google  #需要备份的数据库名，如果备份多个数据库，重复设置这个选项即可
+#binlog-ignore-db=**    #不需要备份的数据库名，如果备份多个数据库，重复设置这个选项即可
+#max_binlog_size=2000M
+
+#server-id=2               #（配置多个从服务器时依次设置id号）
+#log-bin = mysql-bin
+#relay_log = /var/lib/mysql/mysql-relay-bin
+#log_slave_updates=1
+#read_only=1
+
+
+
 datadir = /data/mysql
 socket = /tmp/mysql.sock
 pid-file = /data/logs/mysql/mysql.pid
@@ -74,7 +89,7 @@ default_storage_engine = InnoDB
 #innodb_log_file_size = 48M
 innodb_file_per_table = 1
 innodb_flush_method = O_DIRECT
-log-bin=mysql-bin
+
 # MyISAM
 #key_buffer_size = 48M
 # character-set
@@ -97,8 +112,23 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 socket = /tmp/mysql.sock
 port = 3306
 
-endif
+
 EOF
+
+
+
+
+#1 建立账户，分配权限 master slave 上使用mysql登陆,分别操作如下操作:
+#GRANT FILE,SELECT,REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO  replication@'%' IDENTIFIED BY '123456';
+#flush privileges;
+#2 vi /etc/my.cnf
+# show master status
+#3 vi /etc/my.cnf
+#4 mysql> CHANGE MASTER TO MASTER_HOST='192.168.16.241',   MASTER_USER='replication', MASTER_PASSWORD='123456', MASTER_LOG_FILE='recorded_log_file_name',MASTER_LOG_POS=recorded_log_position;
+#5 show SLAVE status
+
+
+
 
 echo 'export PATH=$PATH:/usr/local/server/mysql/bin'>> /etc/profile
 
