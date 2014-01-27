@@ -1,0 +1,33 @@
+#!/bin/bash
+
+FTP_ADDR=deploy.winupon.com
+FTP_USER=down
+FTP_PASS=winupon.zdsoft.123
+
+server_type=$1
+war_path=$2
+user=$3
+URL=ftp://$FTP_USER:$FTP_PASS@$FTP_ADDR$war_path
+DEPLOY_WAR=${war_path##*app/}
+
+cd /usr/local/src/deploy
+DATE_DIR=`date +'%Y%m%d%H%M'`
+mkdir /usr/local/src/deploy/$DATE_DIR
+cd /usr/local/src/deploy/$DATE_DIR
+
+wget $URL
+
+
+TOMCAT_SID=`ps -ef |grep tomcat |grep -w apache-tomcat-6.0.35_$server_type|grep -v 'grep'|awk '{print $2}'`
+echo 'Tomcat sid:'$TOMCAT_SID >> /home/$user/deploy.log
+kill -9 $TOMCAT_SID
+
+cp /opt/vhosts/$server_type/ROOT.war $server_type.war
+cp /usr/local/src/deploy/$DATE_DIR/$DEPLOY_WAR /opt/vhosts/$server_type/ROOT.war
+
+rm -rf /opt/vhosts/$server_type/ROOT
+rm -rf /opt/apache-tomcat-6.0.35_#server_type/work/*
+/opt/apache-tomcat-6.0.35_$server_type/bin/startup.sh
+
+echo $server_type :$war_path ' release done '>> /home/$user/deploy.log
+
