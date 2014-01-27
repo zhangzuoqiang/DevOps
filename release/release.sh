@@ -1,7 +1,16 @@
 #!/bin/bash
 
+FTP_ADDR=deploy.winupon.com
+FTP_USER=down
+FTP_PASS=winupon.zdsoft.123
 
-for war_line in `grep -v "^#"  war.txt`
+
+cd /usr/local/src/deploy
+DATE_DIR=`date +'%Y%m%d%H%M'`
+mkdir /usr/local/src/deploy/$DATE_DIR
+
+
+for war_line in `grep -v "^#"  /usr/local/src/deploy/war.txt`
   do
   echo "================="
   #echo $war_line
@@ -17,9 +26,14 @@ do
 done
 
 
+URL=ftp://$FTP_USER:$FTP_PASS@$FTP_ADDR$war_path
+DEPLOY_WAR=${war_path##*app/}
+cd /usr/local/src/deploy/$DATE_DIR
+wget $URL
+
    echo "server_type:$server_type server_path:$war_path"  >> /home/winupon/deploy.log
 
-	for server_line in `grep -v "^#" remote_server.txt`
+	for server_line in `grep -v "^#" /usr/local/src/deploy/remote_server.txt`
   	  do
                 echo "-----------------"
 
@@ -41,6 +55,8 @@ done
 	  scp -P $port /usr/local/src/deploy/deploy.txt $user@$ip:/usr/local/src/deploy/deploy.sh
           echo deploy file create done!
 
+	  scp -P $port /usr/local/src/deploy/$DATE_DIR/$DEPLOY_WAR $user@$ip:/usr/local/src/deploy/$DATE_DIR/
+
           ssh -p $port $user@$ip "chmod +x /usr/local/src/deploy/deploy.sh"
 	  ssh -p $port $user@$ip "/usr/local/src/deploy/deploy.sh $server_type $war_path" $user
    
@@ -53,7 +69,7 @@ done
        rm -rf /usr/local/src/deploy/deploy.sh
        cp /usr/local/src/deploy/deploy.txt /usr/local/src/deploy/deploy.sh
        chmod +x /usr/local/src/deploy/deploy.sh
-        /usr/local/src/deploy/deploy.sh $server_type $war_path $user
+#        /usr/local/src/deploy/deploy.sh $server_type $war_path $user
   done
 
 
