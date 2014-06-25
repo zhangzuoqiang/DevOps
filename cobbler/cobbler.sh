@@ -48,3 +48,4 @@ cobbler import --path=/media/cdrom --name=rhel-6.3-x86_64
 sed -i 's/manage_dhcp: 0/manage_dhcp: 1/g'  /etc/cobbler/settings
 #修改 /etc/cobbler/dhcp.template
 
+#cobbler list
