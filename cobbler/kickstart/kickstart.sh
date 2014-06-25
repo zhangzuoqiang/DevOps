@@ -24,12 +24,14 @@ yum -y install dhcp
 yum -y install tftp-server xinetd
 yum -y install syslinux
 yum -y install httpd
+yum -y install cobbler
 
 chkconfig dhcpd on
 chkconfig tftp on
 chkconfig xinetd on
 chkconfig httpd on
 service xinetd start
+service cobblerd start
 
 ##关闭SELIINUX
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
