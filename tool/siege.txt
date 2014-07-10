@@ -1,0 +1,7 @@
+wget http://download.joedog.org/siege/siege-3.0.5.tar.gz
+
+siege -c 20 -r 2 -f  test.url 
+#参数说明：
+#-c 20 并发20个用户
+#-r 2 重复循环2次
+#-f www.chedong.com.url 任务列表文件：URL列表

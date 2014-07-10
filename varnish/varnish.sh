@@ -35,6 +35,10 @@ cp redhat/varnish.sysconfig  /etc/sysconfig/varnish
 #/etc/varnish/default.vcl
 #默认配置文件
 
+service  varnish start
+
+# 浏览器访问 http://127.0.0.1:6081/ 
+
 #创建Varnish配置文件：
 vi /usr/local/varnish/vcl.conf
 
@@ -67,3 +71,11 @@ EOF
 #查看Varnish服务器连接数与命中率：
 /usr/local/varnish/bin/varnishstat
 
+
+varnishtop -i rxurl
+varnishtop -i txurl
+varnishtop -i RxHeader -I Accept-Encoding
+
+varnishhist
+#Hits are marked with a pipe character ("|"), 
+#and misses are marked with a hash character ("#")
