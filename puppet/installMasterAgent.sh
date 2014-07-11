@@ -12,9 +12,12 @@
 
 #设置epel 源
 rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm
+rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+
+rpm -ivh http://mirrors.aliyun.com/centos/6.5/os/x86_64/Packages/rubygems-1.3.7-5.el6.noarch.rpm
 
 #服务端安装
-yum -y install ruby ruby-libs ruby-shadow puppet puppet-server facter
+yum -y install ruby ruby-libs ruby-shadow  ruby-rdoc  puppet puppet-server facter
 #客户端安装
 yum -y install ruby ruby-libs ruby-shadow puppet facter
 
@@ -49,7 +52,6 @@ puppet cert sign agent.domain.com
 #######
 mkdir -p /etc/puppet/modules/base/{files,manifests,templates,lib,tests,spec}
 mkdir -p /etc/puppet/modules/base/files/test
-mkdir  /etc/puppet/manifests/nodes
 cat >> /etc/puppet/modules/base/manifests/touch.pp <<EOF
 #touch.pp for puppet
 class base::touch {
@@ -64,13 +66,28 @@ class base::touch {
 }
 EOF
 
-cat >> /etc/puppet/modules/base/manifests/init.pp<<EOF
-#base module init.pp for puppet
-class base {
-    include base::touch
+cat >> /etc/puppet/modules/base/manifests/user.pp <<EOF
+class base::user {
+       group { "web":
+        		ensure => "present",
+        		gid => 1000,
+         	name => "web";
+        }
+      user { "web":
+        		ensure => "present",
+        		gid => 1000,
+		uid => 1000,		
+		home  => "/home/web",
+		     managehome => true,
+			 password => '123456',   #需要从/etc/shadow拷贝或者生成
+        		allowdupe => true;
+        }
 }
 EOF
 
+
+
+mkdir  /etc/puppet/manifests/nodes
 cat >> /etc/puppet/manifests/nodes/agent.domain.com.pp<<EOF
 #base nodes db1.pp for puppet
 node 'agent.domain.com' {
@@ -102,11 +119,14 @@ class base::sync {
 EOF
 
 
-vim /etc/puppet/modules/base/manifests/init.pp
-
+cat >> /etc/puppet/modules/base/manifests/init.pp<<EOF
+#base module init.pp for puppet
 class base {
-include base::touch,base::sync
+    include base::touch,base::sync
 }
+EOF
+
+######
 
 服务器端验证
 puppet parser validate /etc/puppet/modules/base/manifests/init.pp
