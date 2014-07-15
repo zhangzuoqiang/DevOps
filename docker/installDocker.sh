@@ -1,5 +1,6 @@
 #安装epel包
 rpm -Uvh 'http://download.fedoraproject.org/pub/epel/6/x64/epel-release-6-3.noarch.rpm'
+http://mirrors.yun-idc.com/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 #安装docker-io在我们的主机上
 sudo yum -y install docker-io
@@ -39,6 +40,70 @@ ubuntu 我们想要在内部运行命令的镜像
 hello word 输出的内容
 
 
+
+
+1、下载官方制作的CentOS6.4镜像
+
+docker pull centos
+输出大致如下：
+
+
+Pulling repository centos
+539c0211cd76: Downloading 67.96 MB/98.56 MB (69%)
+539c0211cd76: Download complete
+下载的镜像位于/var/lib/docker/devicemapper/mnt/539c0211cd76*/rootfs/
+
+2、查看安装好的虚拟机
+
+
+# docker images
+输出如下
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              6.4                 539c0211cd76        8 months ago        300.6 MB (virtual 300.6 MB)
+3、接下来我们在centos 6.4的环境下执行一个top命令，然后查看输出
+
+
+# ID=$( docker run -d centos /usr/bin/top -b)
+# docker attach $ID
+输出如下
+top - 23:30:50 up 47 min,  0 users,  load average: 0.14, 0.44, 0.53
+Tasks:   1 total,   1 running,   0 sleeping,   0 stopped,   0 zombie
+Cpu(s):  4.6%us,  1.0%sy,  0.0%ni, 91.6%id,  2.8%wa,  0.0%hi,  0.0%si,  0.0%st
+
+4、杀死这个虚拟机
+
+
+# docker stop $ID
+5、进入虚拟机的shell，干你想干的任何事情
+
+
+# docker run -i -t centos /bin/bash
+ 
+
+6、官方的这个centos镜像非常小，不到100M，如果需要配置一个复杂的环境，请直接yum解决。
+
+docker 也提供了在线搜索镜像模板功能，类似与puppet在线安装模板（步骤1）
+
+
+# docker search ubuntu
+# docker search centos
+# docker search debian
+通过网页搜索模板 https://index.docker.io/
+docker ps 
+docker ps -a
+#查看详细
+docker ps -l 
+
+ boot2docker ip
+ # log tail -f
+ docker logs -f $ID 
+ #查看进程
+ docker top $ID
+ docker inspect $ID
+docker rm $ID
+
+
+docker images
 
 
 
