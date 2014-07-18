@@ -1,5 +1,5 @@
 #ubuntu mirrors
-#/etc/apt/source.list
+cat >>/etc/apt/source.list
 
 deb http://mirrors.163.com/ubuntu/ trusty main multiverse restricted universe 
 deb http://mirrors.163.com/ubuntu/ trusty-security main multiverse restricted universe 

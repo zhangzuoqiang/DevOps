@@ -41,3 +41,22 @@ cd apache-tomcat-7.0.47
 bin/startup.sh
 
 
+
+#centos
+
+yum install openssh openssh-server 
+yum install net-tools
+
+which sshd
+/usr/sbin/sshd
+ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key
+ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""
+
+
+
+
+ssh_exchange_identification: Connection closed by remote host  
+ 
+解决办法：
+修改/etc/hosts.allow文件，加入 sshd:ALL，然后重启sshd服务.
+修改/etc/hosts.deny, 将 ALL: ALL 注释掉.

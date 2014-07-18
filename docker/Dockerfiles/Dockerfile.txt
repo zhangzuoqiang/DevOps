@@ -1,0 +1,48 @@
+cd /usr/local/src
+
+mkdir docker
+cd docker
+touch Dockerfile
+
+
+cat >> /usr/local/src/docker/Dockerfile <<EOF
+# This is a comment
+FROM ubuntu:14.04
+MAINTAINER chenkj <hzchenkj@163.com>
+RUN apt-get -qq update
+RUN apt-get -qqy install ruby ruby-dev
+RUN apt-get install -y python
+RUN apt-get install -y curl
+RUN apt-get install -y vim
+
+# Install go
+RUN curl https://go.googlecode.com/files/go1.2.1.linux-amd64.tar.gz | tar -C /usr/local -zx
+
+ENV GOROOT /usr/local/go
+ENV PATH /usr/local/go/bin:$PATH
+
+# Setup home environment
+RUN useradd dev
+RUN mkdir /home/dev && chown -R dev:/home/dev
+RUN mkdir -p /home/dev/go /home/dev/bin /home/dev/lib /home/dev/include
+ENV PATH /home/dev/bin:$PATH
+ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
+ENV LD_LIBRARY_PATH /home/dev/lib
+ENV GOPATH /home/dev/go:$GOPATH
+
+# Link in shared parts of the home directory
+RUN ln -s /var/shared/.ssh
+RUN ln -s /var/shared/.bash_history
+RUN ln -s /var/shared/.maintainercfg
+RUN chown -R dev:/home/dev
+USER dev
+
+
+EOF
+
+
+
+
+sudo docker build -t="hzchenkj/ubuntu:v2"  /usr/local/src/docker/Dockerfile 
+
+

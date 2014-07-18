@@ -1,5 +1,14 @@
 介绍如何在RedHat/CentOS环境下，安装新版本的Docker。
 
+
+#!/bin/bash
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup
+mv /etc/yum.repos.d/epel-testing.repo /etc/yum.repos.d/epel-testing.repo.backup
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo
+yum makecache
+
 一、禁用selinux
 由于Selinux和LXC有冲突，所以需要禁用selinux。编辑/etc/selinux/config，设置两个关键变量。    
 SELINUX=disabled 
@@ -8,6 +17,7 @@ SELINUXTYPE=targeted
 
 sudo yum install http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
 http://mirrors.yun-idc.com/epel/6/i386/epel-release-6-8.noarch.rpm
+http://mirrors.yun-idc.com/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm
 三、添加hop5.repo源
 
 
@@ -50,3 +60,36 @@ sudo chkconfig docker on  # 开机启动
 
 sudo docker run -i -t Ubuntu /bin/echo hello world
   初次执行此命令会先拉取镜像文件，耗费一定时间。最后应当输出hello world。
+  
+  
+  
+  　　报错：unable to remount sys readonly: unable to mount sys as readonly max retries reached
+  在CentOS下还需要修改相应的配置文件。
+
+  　　需要把/etc/sysconfig/docker文件中的other-args更改为：
+
+  　　other_args="--exec-driver=lxc --selinux-enabled"    
+  
+  
+   #centos
+  yum install initscripts wget lftp openssh-server net-tools passwd
+  
+  which sshd
+  /usr/sbin/sshd
+  ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key
+  ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""
+  
+  useradd docker
+  passwd docker
+  
+  docker run -d -p 22 -p 9090:8080 centos /usr/sbin/sshd -D
+  docker run -d -P --name web training/webapp python app.py
+  
+  docker ps -l
+  
+  四. docker镜像迁移
+
+  镜像导出：
+  docker save IMAGENAME | bzip2 -9 -c>img.tar.bz2
+  镜像导入：
+  bzip2 -d -c <img.tar.bz2 | docker load
