@@ -1,0 +1,3 @@
+192.168.20.196 administrator zdsoft RMProxyServer
+192.168.20.194 administrator zdsoft RMProxyServer
+192.168.20.195 administrator zdsoft RMProxyServer
