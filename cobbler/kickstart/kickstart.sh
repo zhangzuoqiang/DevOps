@@ -92,7 +92,7 @@ label linux
 menu label ^Install or upgrade an existing system
 menu default
 kernel vmlinuz
-append initrd=initrd.img ks=http://192.168.20.320/ks.cfg
+append initrd=initrd.img ks=http://192.168.16.320/ks.cfg
 EOF
 
 
