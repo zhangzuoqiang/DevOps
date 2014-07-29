@@ -1,4 +1,4 @@
-#!/usr/bin/env Python
+#!/usr/bin/env python
 import time
 import sys
 
@@ -13,7 +13,7 @@ def	rx():
 	ifstat = open('/proc/net/dev').readlines()
 	for interface in  ifstat:
 		if INTERFACE in interface:
-			stat = float(interface.split()[1])
+			stat = float(interface.split(":")[1].split()[0])
 			STATS[0:] = [stat]
 
 def	tx():
@@ -36,6 +36,6 @@ while	True:
 	RX_O = rxstat_o[0]
 	TX = float(STATS[1])
 	TX_O = rxstat_o[1]
-	RX_RATE = round((RX - RX_O)/1024/1024,3)
-	TX_RATE = round((TX - TX_O)/1024/1024,3)
-	print RX_RATE ,'MB		',TX_RATE ,'MB'
+	RX_RATE = round((RX - RX_O)/1024,3)
+	TX_RATE = round((TX - TX_O)/1024,3)
+	print RX_RATE ,'KB		',TX_RATE ,'KB'
