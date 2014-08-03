@@ -4,24 +4,25 @@ import os
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJCET_PATH = os.path.join(SETTINGS_DIR,os.pardir)
 PROJCET_PATH = os.path.abspath(PROJCET_PATH)
-DATABASE_FILE= os.path.join(PROJCET_PATH,'cms.db')
+DATABASE_FILE = os.path.join(PROJCET_PATH,'CMS.db')
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('hzchenkj', 'hzchenkj@163.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DATABASE_FILE,                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'cms',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'root',
+        'PASSWORD': '123456',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -89,7 +90,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'ia&lyx_126wvtfvyl8!er5zq@^lo(l@159mbehb-ha-aa5xtqm'
+SECRET_KEY = '2!*o(78$b$+_52pq@_3cwghr^&(npgdtidba%xqs22k-7=9^mm'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
