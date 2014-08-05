@@ -4,14 +4,14 @@ import os
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJCET_PATH = os.path.join(SETTINGS_DIR,os.pardir)
 PROJCET_PATH = os.path.abspath(PROJCET_PATH)
-DATABASE_FILE = os.path.join(PROJCET_PATH,'CMS.db')
+TEMPLATE_DIR = os.path.join(PROJCET_PATH,'template')
 
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    # ('hzchenkj', 'hzchenkj@163.com'),
 )
 
 MANAGERS = ADMINS
@@ -90,7 +90,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '2!*o(78$b$+_52pq@_3cwghr^&(npgdtidba%xqs22k-7=9^mm'
+SECRET_KEY = 'a7my=&kbg6d3_5w3*oh3=13gh$qd8@8mw0!%wy(2-%=67il*2j'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -118,6 +118,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    TEMPLATE_DIR,
 )
 
 INSTALLED_APPS = (
@@ -127,7 +128,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'django.contrib.flatpages',
     # Uncomment the next line to enable admin documentation:
