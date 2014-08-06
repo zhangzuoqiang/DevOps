@@ -1,0 +1,33 @@
+python manage.py shell
+
+from bookmarks.models import*
+
+link1 = Link(url='http://www.zdsoft.net')
+link1.save()
+
+links = Link.objects.all()
+
+Link.objects.get(id=1)
+link1.delete()
+Link.objects.count()
+
+
+setting.py
+
+
+import os
+SETTINGS_DIR = os.path.dirname(__file__)
+
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
+STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
+DATABASE_PATH = os.path.join(PROJECT_PATH, 'rango.db')  
+
+# Printing paths for sanity's sake
+print "Settings directory:", SETTINGS_DIR
+print "Project root:", PROJECT_PATH
+print "Templates:", TEMPLATE_PATH
+print "Static:", STATIC_PATH
+print "DB:", DATABASE_PATH 
