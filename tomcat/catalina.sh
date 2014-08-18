@@ -85,7 +85,12 @@
 # -----------------------------------------------------------------------------
 
 #java args
-JAVA_OPTS="-server -Xms1048m -Xmx1048m -XX:NewRatio=2  -XX:PermSize=256M -XX:MaxPermSize=512M  -XX:+HeapDumpOnOutOfMemoryError -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=16689 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.awt.headless=true -DmqEnable=0 -Deis.run.subsystem=eis_basedata -Deis.import.start=flase -Deis.update.grade.name=true"
+JAVA_OPTS="-server -Xms1048m -Xmx1048m -XX:NewRatio=2  -XX:PermSize=256M -XX:MaxPermSize=512M"
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=16689" 
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+JAVA_OPTS="$JAVA_OPTS -Djava.rmi.server.hostname=<hostname>"
+JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -Djava.awt.headless=true"
+JAVA_OPTS="$JAVA_OPTS -DmqEnable=0 -Deis.run.subsystem=eis_basedata -Deis.import.start=flase -Deis.update.grade.name=true"
 
 #JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
 #JAVA_OPTS="$JAVA_OPTS -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection"

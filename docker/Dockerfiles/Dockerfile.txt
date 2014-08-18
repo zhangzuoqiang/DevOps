@@ -4,45 +4,57 @@ mkdir docker
 cd docker
 touch Dockerfile
 
-
 cat >> /usr/local/src/docker/Dockerfile <<EOF
 # This is a comment
 FROM ubuntu:14.04
 MAINTAINER chenkj <hzchenkj@163.com>
+
+RUN echo "deb http://mirrors.163.com/ubuntu/ trusty main restricted" > /etc/apt/sources.list
+
 RUN apt-get -qq update
-RUN apt-get -qqy install ruby ruby-dev
-RUN apt-get install -y python
-RUN apt-get install -y curl
-RUN apt-get install -y vim
+RUN apt-get install -y vim curl ping wget lftp
+RUN apt-get install -y mysql-server mysql-client
+#RUN apt-get install -y memcached 
+#RUN apt-get install sun-java6-jdk tomcat6
 
-# Install go
-RUN curl https://go.googlecode.com/files/go1.2.1.linux-amd64.tar.gz | tar -C /usr/local -zx
 
-ENV GOROOT /usr/local/go
-ENV PATH /usr/local/go/bin:$PATH
 
-# Setup home environment
-RUN useradd dev
-RUN mkdir /home/dev && chown -R dev:/home/dev
-RUN mkdir -p /home/dev/go /home/dev/bin /home/dev/lib /home/dev/include
-ENV PATH /home/dev/bin:$PATH
-ENV PKG_CONFIG_PATH /home/dev/lib/pkgconfig
-ENV LD_LIBRARY_PATH /home/dev/lib
-ENV GOPATH /home/dev/go:$GOPATH
+#CMD memcached -u root -p 11211
+#ENTRYPOINT["memcached","-u","root","-p","11211"]
 
-# Link in shared parts of the home directory
-RUN ln -s /var/shared/.ssh
-RUN ln -s /var/shared/.bash_history
-RUN ln -s /var/shared/.maintainercfg
-RUN chown -R dev:/home/dev
-USER dev
-
+EXPOSE 3306
+CMD ["/usr/bin/mysqld_safe"]
 
 EOF
 
+docker build -t mysql .
+docker run -d -p 3306:3306 mysql
+docker run -i -t  mysql /bin/bash
+docker run -v="$HOME/mysqldata":"/data"  -i -t -p 3306 oracle /bin/bash
+
+docker build --rm -t dev:memcache  /usr/local/src/docker/Dockerfile 
+docker build -t dev:memcache .
+
+docker run -i -t --name shell dev:base /bin/bash 
+
+docker run --name memcache_service -d dev:memcache 
+
+
+brew install sshfs
+
+
+#端口映射
+boot2docker ssh -L 5080:localhost:4080  #这条命令可以在  boot2docker-vm  运行时执行，建立多个不同的映射就是执行多次
+
+docker run -i -t -p 4080:80 learn/tutorial
+root@c79b5070a972:/# apachectl start
+#Mac 的浏览器中打开 http://localhost:5080
 
 
 
-sudo docker build -t="hzchenkj/ubuntu:v2"  /usr/local/src/docker/Dockerfile 
+boot2docker ssh -L 8000:localhost:8000 
+docker run -i -t -p 8000:8000
 
 
+
+mysql -p --execute="CREATE USER 'docker'@'%' IDENTIFIED BY '123456';"

@@ -92,8 +92,9 @@ label linux
 menu label ^Install or upgrade an existing system
 menu default
 kernel vmlinuz
-append initrd=initrd.img ks=http://192.168.16.320/ks.cfg
+append initrd=initrd.img ks=http://192.168.16.320/ks.cfg ksdevice=em1
 EOF
 
+#多网卡安装，提示需要选择网卡 加上ksdevice=em1指定
 
 #cp ks.cfg /media/
