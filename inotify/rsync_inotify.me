@@ -1,0 +1,86 @@
+#rsync client + inotify 192.168.16.230	master m1
+#rsync server1			192.168.16.206  slave1 s1
+#rsync server2			192.168.16.207	slave2 s2
+
+一、在两台 SLAVE 机器上部署 rsync 服务端程序
+1、安装rsync
+yum install rsync -y
+2、修改rsync配置文件
+cat > /etc/rsyncd.conf << EOF
+#Rsync server
+#created by chenkj
+##rsyncd.conf start##
+uid = root      # rsync对后面模块中的path路径拥有什么权限
+gid = root      # rsync对后面模块中的path路径拥有什么权限
+use chroot = no      # 安全操作
+max connections = 2000      # 定义连接数2000
+timeout = 600      # 600秒超时
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+ignore errors      # 忽略错误
+read only = false    # false才能上传文件，true不能上传文件
+list = false    # 文件列表
+hosts allow = 192.168.16.0/24
+hosts deny = *
+auth users = rsync_backup    # 虚拟用户，同步时需要用这个用户
+secrets file = /etc/rsync.password      # 密码文件
+#####################################
+[web]      # 模块名称
+comment = redhat.sx site files by chenkj    # 注释
+path = /data/web/redhat.sx                 # 模块的路径
+####################################
+[data]
+comment = redhat.sx site sit data files  by chenkj 
+path = /data/web_data/redhat.sx
+#####################################
+EOF
+
+3、创建相关待同步目录
+mkdir /data/{web,web_data}/redhat.sx -p
+tree /data
+4、相关认证和权限项配置
+# echo 'rsync_backup:redhat' > /etc/rsync.password
+# chmod 600 /etc/rsync.password
+5、以守护进程方式启动rsync服务
+# rsync --daemon
+6、查看rsync服务状态
+# lsof -i tcp:873
+7、为rsync添加开机自启动
+# echo "/usr/bin/rsync --daemon"  >> /etc/rc.local
+重启的命令 需要以先杀掉后台守护进程，然后再启动的方式来重启服务
+# pkill rsync
+# rsync --daemon
+
+二、在M1 上配置rsync客户端
+1、安装Rsync并配置相关权限
+在Master上配置rsync客户端相关权限认证：
+# yum install rsync -y
+# echo "redhat">/etc/rsync.password
+# chmod 600 /etc/rsync.password
+2、M1上手动测试rsync的同步情况
+1）分别创建待同步数据
+[root@rsync-client-inotify ~]# mkdir /data/{web,web_data}/redhat.sx -p
+[root@rsync-client-inotify ~]# touch /data/{web/redhat.sx/index.html,web_data/redhat.sx/a.jpg}
+  
+2）执行同步命令
+针对S1(192.168.16.206):
+# rsync -avzP /data/web/redhat.sx rsync_backup@192.168.16.206::web/ --password-file=/etc/rsync.password
+# rsync -avzP /data/web_data/redhat.sx  rsync_backup@192.168.16.206::data/ --password-file=/etc/rsync.password
+
+针对S2(192.168.16.207):
+
+
+三、在M1 上配置inotify
+1、查看 M1的 内核是否支持inotify
+# ll /proc/sys/fs/inotify/*
+2、安装inotify
+# yum install make  gcc gcc-c++
+# wget http://nchc.dl.sourceforge.net/project/inotify-tools/inotify-tools/3.13/inotify-tools-3.13.tar.gz
+# tar xzf inotify-tools-3.13.tar.gz
+# cd inotify-tools-3.13
+# ./configure
+# make && make install
+3、查看inotify提供的工具
+# ll /usr/local/bin/inotify*
+

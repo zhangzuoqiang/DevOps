@@ -1,0 +1,14 @@
+#主机
+yum install cpan
+cpan SSH::Batch
+
+#vim ~/.fornodesrc
+cluster1=[a,b,c].example.com
+cluster2=serv[1-10].example.com
+cluster3=10.0.0.[3,4,6] 10.0.0.[7-20]
+cluster=cluster1+cluster2+cluster3
+
+查看列表:fornodes -x '{cluster1}'
+执行命令:atnodes  -u root 'uptime' '{cluster1}'
+传输文件:tonodes /tmp/my.sh '{cluster}':/root/tmp
+生成key:key2nodes -u root '{cluster}'
