@@ -1,0 +1,142 @@
+#rsync client + inotify 192.168.16.230	master m1
+#rsync server1			192.168.16.206  slave1 s1
+#rsync server2			192.168.16.207	slave2 s2
+
+一、在两台 SLAVE 机器上部署 rsync 服务端程序
+1、安装rsync
+yum install rsync -y
+2、修改rsync配置文件
+mkdir /etc/rsyncd
+cat > /etc/rsyncd/rsyncd.conf << EOF
+#Rsync server
+#created by chenkj
+##rsyncd.conf start##
+port = 873
+address = 192.168.16.206
+uid = root      # rsync对后面模块中的path路径拥有什么权限
+gid = root      # rsync对后面模块中的path路径拥有什么权限
+use chroot = no      # 安全操作
+max connections = 2000      # 定义连接数2000
+timeout = 600      # 600秒超时
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+ignore errors      # 忽略错误
+read only = false    # false才能上传文件，true不能上传文件
+list = false    # 文件列表
+hosts allow = 192.168.16.0/24
+hosts deny = *
+auth users = rsync_ckj    # 虚拟用户，同步时需要用这个用户
+secrets file = /etc/rsyncd/rsyncd.secrets      # 密码文件
+#####################################
+[web]      # 模块名称
+comment = redhat.sx site files 
+path = /data/web/redhat.sx                 # 模块的路径
+secrets file=/etc/rsyncd/rsyncd.secrets
+read only = false
+####################################
+[data]
+comment = redhat.sx site sit data files
+path = /data/web_data/redhat.sx
+secrets file=/etc/rsyncd/rsyncd.secrets
+read only = false
+#####################################
+EOF
+
+3、创建相关待同步目录
+mkdir /data/{web,web_data}/redhat.sx -p
+tree /data
+4、相关认证和权限项配置
+# echo 'rsync_ckj:redhat' > /etc/rsyncd/rsyncd.secrets
+# chmod 600 /etc/rsyncd/rsyncd.secrets
+5、以守护进程方式启动rsync服务
+# rsync --daemon --config
+6、查看rsync服务状态
+# lsof -i tcp:873
+7、为rsync添加开机自启动
+# echo "/usr/bin/rsync --daemon"  >> /etc/rc.local
+重启的命令 需要以先杀掉后台守护进程，然后再启动的方式来重启服务
+# pkill rsync
+# rsync --daemon
+
+二、在M1 上配置rsync客户端
+1、安装Rsync并配置相关权限
+在Master上配置rsync客户端相关权限认证：
+# yum install rsync -y
+#mkdir /etc/rsync
+# echo "redhat">/etc/rsync/rsync.secrets
+# chmod 600 /etc/rsync/rsync.secrets
+2、M1上手动测试rsync的同步情况
+1）分别创建待同步数据
+[root@rsync-client-inotify ~]# mkdir /data/{web,web_data}/redhat.sx -p
+[root@rsync-client-inotify ~]# touch /data/{web/redhat.sx/index.html,web_data/redhat.sx/a.jpg}
+  
+2）执行同步命令
+针对S1(192.168.16.206):
+# rsync -avzP /data/web/redhat.sx rsync_backup@192.168.16.206::web/ --password-file=/etc/rsync/rsync.secrets
+# rsync -avzP /data/web_data/redhat.sx  rsync_backup@192.168.16.206::data/ --password-file=/etc/rsync/rsync.secrets
+
+针对S2(192.168.16.207):
+
+rsync服务器上提供了哪些可用的数据源
+# rsync  --list-only  root@192.168.16.207::
+
+
+三、在M1 上配置inotify
+1、查看 M1的 内核是否支持inotify
+# ll /proc/sys/fs/inotify/*
+2、安装inotify
+# yum install make  gcc gcc-c++
+# wget http://nchc.dl.sourceforge.net/project/inotify-tools/inotify-tools/3.13/inotify-tools-3.13.tar.gz
+# tar xzf inotify-tools-3.13.tar.gz
+# cd inotify-tools-3.13
+# ./configure
+# make && make install
+3、查看inotify提供的工具
+# ll /usr/local/bin/inotify*
+
+
+四、rsync和inotify-tools做结合
+1、实时备份脚本
+# cat auto_rsync.sh
+#!/bin/bash
+src1='/data/web/redhat.sx/'
+src2='/data/web_data/redhat.sx/'
+des1=web
+des2=data
+host1=192.168.16.206
+host2=192.168.16.207
+user=rsync_backup
+allrsync='/usr/bin/rsync -rpgovz --delete --progress'
+/usr/local/bin/inotifywait -mrq --timefmt '%d/%m/%y %H:%M' --format '%T %w %w%f %e' -e modify,delete,create,attr
+ib $src | while read DATE TIME DIR FILE EVENT;
+do
+case $DIR in
+${src1}*)
+$allrsync $src1 $user@$host1::$des1 --password-file=/etc/rsync.password && echo "$DATE $TIME $FILE was rsynced" &>> /var/log
+/rsync-$des1-$host1.log
+$allrsync $src1 $user@$host2::$des1 --password-file=/etc/rsync.password && echo "$DATE $TIME $FILE was rsynced" &>> /var/log
+/rsync-$des1-$host2.log
+;;
+${src2}*)
+$allrsync  $src2 $user@$host1::$des2 --password-file=/etc/rsync.password && echo "$DATE $TIME $FILE was rsynced" &>> /var/lo
+g/rsync-$des2-$host1.log
+$allrsync  $src2 $user@$host2::$des2 --password-file=/etc/rsync.password && echo "$DATE $TIME $FILE was rsynced" &>> /var/lo
+g/rsync-$des2-$host2.log
+;;
+esac
+done
+
+
+2、加入开机自启动
+需要将该脚本加入开机自启动，并且设置在启动的时候，将脚本执行输出重定向到指定日志文件以及放到后台运行！
+# chmod o+x auto_rsync.sh
+# mv auto_rsync.sh /usr/sbin/
+# vim /etc/rc.local
+Bash /usr/sbin/auto_rsync.sh & >> /var/log/auto_rsync.log &
+
+3 测试
+
+for i in {1..10};do dd if=/dev/zero of=/data/web/redhat.sx/$i.html bs=10M count=1 ;done
+
+
