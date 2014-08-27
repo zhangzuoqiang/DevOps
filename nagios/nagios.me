@@ -1,0 +1,196 @@
+yum install -y wget httpd php gcc glibc glibc-common gd gd-devel make net-snmp
+
+cd /tmp
+wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.4.tar.gz
+wget http://nagios-plugins.org/download/nagios-plugins-2.0.tar.gz
+
+useradd nagios
+groupadd nagcmd
+usermod -a -G nagcmd nagios
+
+tar zxvf nagios-4.0.4.tar.gz
+tar zxvf nagios-plugins-2.0.tar.gz
+cd nagios-4.0.4
+./configure --with-command-group=nagcmd
+make all
+make install
+make install-init
+make install-config
+make install-commandmode
+make install-webconf
+cp -R contrib/eventhandlers/ /usr/local/nagios/libexec/
+chown -R nagios:nagios /usr/local/nagios/libexec/eventhandlers
+/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+/etc/init.d/nagios start
+/etc/init.d/httpd start
+
+Create a Default User for Web Access.
+Add a default user for Web Interface Access:
+htpasswd –c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+Nagios Plugin Installation
+cd /tmp/nagios-plugins-2.0
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+make install
+
+chkconfig --add nagios
+chkconfig --level 35 nagios on
+chkconfig --add httpd
+chkconfig --level 35 httpd on
+
+
+http://<your.nagios.server.ip>/nagios
+
+
+默认的配置文件在/usr/local/nagios/etc
+
+
+被监控机器
+yum install -y openssl openssl-devel
+useradd nagios
+passwd nagios
+cd /tmp
+wget http://nagios-plugins.org/download/nagios-plugins-2.0.tar.gz
+tar zxvf nagios-plugins-2.0.tar.gz
+cd /tmp/nagios-plugins-2.0
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+make install
+chown nagios.nagios /usr/local/nagios
+chown -R nagios.nagios /usr/local/nagios/libexec
+
+
+wget http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+tar zxvf tar zxvf nrpe-2.15.tar.gz 
+cd nrpe-2.15
+./configure 
+make all
+
+c.1 安装check_nrpe 这个插件
+
+# make install-plugin
+
+监控机需要安装check_nrpe 这个插件，被监控机并不需要，我们在这里安装它只是为了测试目的。
+
+c.2 安装deamon
+
+# make install-daemon
+
+c.3 安装配置文件
+
+# make install-daemon-config
+d. 安装xinted 脚本
+
+# make install-xinetd
+vi /etc/xinetd.d/nrpe
+在only_from 后增加监控主机的IP地址
+编辑/etc/services 文件，增加NRPE服务
+echo "nrpe            5666/tcp                #nrpe" >> /etc/services
+service xinetd restart
+
+netstat -ant|grep 5666
+
+e. 测试NRPE是否则正常工作
+
+使用上面在被监控机上安装的check_nrpe 这个插件测试NRPE 是否工作正常。
+/usr/local/nagios/etc/nrpe.cfg
+
+allowed_host=127.0.0.1,192.168.32.149
+# /usr/local/nagios/libexec/check_nrpe -H 192.168.32.149
+
+查看NRPE的监控命令
+
+# cd /usr/local/nagios/etc
+# cat nrpe.cfg |grep -v "^#"|grep -v "^$"
+
+
+
+9.3 在监控主机（Nagios-Server）上
+
+9.3.1 安装check_nrpe 插件
+
+# tar zxvf nrpe-2.13.tar.gz 
+# cd nrpe-2.13
+# ./configure
+# make all
+# make install-plugin
+
+9.3.2 在commands.cfg中增加对check_nrpe的定义
+
+# vi /usr/local/nagios/etc/objects/commands.cfg
+
+
+# 'check_nrpe' command definition
+define command{
+        command_name    check_nrpe         #check_nrpe,在services.cfg中要使用这个名称.
+        command_line    $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$       
+        }
+9.3.3 定义对Nagios-Linux 主机的监控
+
+下面就可以在services.cfg 中定义对Nagios-Linux 主机的监控了。
+
+
+define service{
+        use                     local-service
+        host_name               Nagios-Linux
+        service_description     Current Load
+        check_command           check_nrpe!check_load
+        }
+
+define service{
+        use                     local-service
+        host_name               Nagios-Linux
+        service_description     Check Disk sda1
+        check_command           check_nrpe!check_sda1
+        }
+
+define service{
+        use                     local-service
+        host_name               Nagios-Linux
+        service_description     Total Processes
+        check_command           check_nrpe!check_total_procs
+        }
+
+define service{
+        use                     local-service
+        host_name               Nagios-Linux
+        service_description     Current Users
+        check_command           check_nrpe!check_users
+        }
+
+define service{
+        use                     local-service
+        host_name               Nagios-Linux
+        service_description     Check Zombie Procs
+        check_command           check_nrpe!check_zombie_procs
+        }
+
+
+
+ 在被监控机（Nagios-Linux）上增加check_swap 命令的定义
+
+# vi /usr/local/nagios/etc/nrpe.cfg
+
+增加下面这一行
+
+command[check_swap]=/usr/local/nagios/libexec/check_swap -w 20% -c 10%
+command[check_http]=/usr/local/nagios/libexec/check_http -I 127.0.0.1
+       
+
+在监控机（Nagios-Server）上增加这个check_swap 监控项目
+
+define service{
+        use                     local-service
+        host_name               lvs-rs1
+        service_description     Check Swap
+        check_command           check_nrpe!check_swap
+        }   
+        
+define service{
+        use                     local-service
+        host_name               lvs-rs1
+        service_description     HTTP
+        check_command           check_nrpe!check_http
+        }
+
+ service nagios restart                    
