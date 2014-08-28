@@ -117,6 +117,17 @@ allowed_host=127.0.0.1,192.168.32.149
 
 9.3.2 在commands.cfg中增加对check_nrpe的定义
 
+
+被控端：
+vi /etc/xinetd.d/nrpe
+only_from 增加主控IP
+vi /usr/local/nagios/etc/nrpe.cfg
+allowed_hosts 增加主控IP
+service xinetd restart
+主控端：
+/usr/local/nagios/libexec/check_nrpe -H 被监控端IP地址       测试是否连接成功
+
+
 # vi /usr/local/nagios/etc/objects/commands.cfg
 
 
@@ -193,4 +204,61 @@ define service{
         check_command           check_nrpe!check_http
         }
 
- service nagios restart                    
+ service nagios restart     
+
+
+
+利用NSClient++监控远程Windows上的“本地信息”
+
+10.1 安装NSClient++
+
+从http://www.nsclient.org/nscp/downloads 下载NSClient++-0.2.7.zip
+
+解压到C盘根目录。
+
+打开cmd 切换到c:\NSClient++-0.2.7
+
+执行nsclient++ /install 进行安装
+执行nsclient++ SysTray 
+在运行里面输入services.msc 打开“服务”
+双击打开，点“登录”标签，在“允许服务与桌面交互”前打勾。
+
+编辑c:\NSClient++-0.2.7下的NSC.ini文件。
+
+将 [modules]部分的所有模块前面的注释都去掉，除了CheckWMI.dll 和 RemoteConfiguration.dll 这两个。
+
+在[Settings]部分设置'password'选项来设置密码，作用是在nagios连接过来时要求提供密码。这一步是可选的，我这里设置为'123456'。
+
+将[Settings]部分'allowed_hosts'选项的注释去掉，并且加上运行nagios的监控主机的IP。各IP之间以逗号相隔。
+这个地方是支持子网的，如果写成192.168.1.0/24则表示该子网内的所有机器都可以访问。如果这个地方是空白则表示所有的主机都可以连接上来。
+
+在cmd 中执行nsclient++ /start启动服务
+
+
+之前已经在监控主机（Nagios-Server）上对Windows 主机的监控做了配置，但是commands.cfg 中默认没有设置密码项，所以要修改一下，增加"-s 123456"，如下：
+
+# 'check_nt' command definition
+define command{
+        command_name    check_nt
+        command_line    $USER1$/check_nt -H $HOSTADDRESS$ -p 12489 -s 123456 -v $ARG1$ $ARG2$
+        }
+
+
+十一、Nagios邮件报警的配置
+
+# yum install -y sendmail*
+# service sendmail restart
+# echo "Hello World" | mail hzchenkj@163.com
+vi /etc/mail.rc
+
+set from=ywb_xunjian@xx.com
+set smtp=mail.xx.com
+set smtp-auth-user=ywb_xunjian@xx.com
+set smtp-auth-password=123456
+set smtp-auth=login
+
+11.2 邮件报警的配置
+
+在上面我们已经简单配置过了/usr/local/nagios/etc/objects/contacts.cfg 文件，Nagios 会将报警邮件发送到配置文件里的E-mail 地址。
+
+
