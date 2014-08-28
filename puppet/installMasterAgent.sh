@@ -14,10 +14,14 @@
 rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
 
+rpm -ivh http://mirrors.aliyun.com/centos/6.5/os/x86_64/Packages/ruby-libs-1.8.7.352-12.el6_4.x86_64.rpm
+rpm -ivh http://mirrors.aliyun.com/centos/6.5/os/x86_64/Packages/ruby-1.8.7.352-12.el6_4.x86_64.rpm
+rpm -ivh http://mirrors.aliyun.com/centos/6.5/os/x86_64/Packages/ruby-irb-1.8.7.352-12.el6_4.x86_64.rpm
+rpm -ivh http://mirrors.aliyun.com/centos/6.5/os/x86_64/Packages/ruby-rdoc-1.8.7.352-12.el6_4.x86_64.rpm
 rpm -ivh http://mirrors.aliyun.com/centos/6.5/os/x86_64/Packages/rubygems-1.3.7-5.el6.noarch.rpm
 
 #服务端安装
-yum -y install ruby ruby-libs ruby-shadow  ruby-rdoc  puppet puppet-server facter
+yum -y install ruby ruby-libs ruby-shadow  ruby-rdoc  puppet puppet-server facter 
 #客户端安装
 yum -y install ruby ruby-libs ruby-shadow puppet facter
 
@@ -31,12 +35,13 @@ sed -i 's/localhost.localdomain/agent.domain.com/g' /etc/sysconfig/network
 
 cat >> /etc/hosts <<EOF
 #use for puppet
-192.168.32.137 master.domain.com
-192.168.32.142  agent.domain.com
+192.168.32.152 master.domain.com
+192.168.32.148  agent.domain.com
 EOF
 
 master:
 service  puppetmaster start
+chkconfig puppetmaster on
 tail -f /var/log/puppet/masterhttp.log
 agent:
 puppet agent --test --server master.domain.com
@@ -47,17 +52,18 @@ puppet cert list
 puppet cert list -all
 puppet cert sign agent.domain.com
 
-
-
-
+#查看本地证书
+tree /var/lib/puppet/ssl/
+#查看服务端口
+netstat -nlatp | grep 8140
 
 服务器端验证
 puppet parser validate /etc/puppet/modules/base/manifests/init.pp
 
 客户端测试
-puppetd  agent  --test
+puppet  agent  --test
 
-
+puppet master --genconfig >/etc/puppet/puppet.conf.out
 
 #environment  development,testing,production
 

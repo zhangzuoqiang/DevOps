@@ -53,15 +53,15 @@ max-lease-time 7200;
 log-facility local7;
 
 #至少一个subnet
-subnet 192.168.20.0 netmask 255.255.255.0 {
-range 192.168.20.200 192.168.20.230;
+subnet 192.168.161.0 netmask 255.255.255.0 {
+range 192.168.161.200 192.168.161.230;
 #option domain-name-servers ns1.internal.example.org;
 #option domain-name "internal.example.org";
-option routers 192.168.20.230;
-option broadcast-address 192.168.20.255;
+option routers 192.168.161.144;
+option broadcast-address 192.168.161.255;
 default-lease-time 600;
 max-lease-time 7200;
-next-server 192.168.20.230; #可以是dns服务器，也可以是tftp
+next-server 192.168.161.144; #可以是dns服务器，也可以是tftp
 filename "pxelinux.0";#使用引导
 }
 EOF
@@ -92,7 +92,7 @@ label linux
 menu label ^Install or upgrade an existing system
 menu default
 kernel vmlinuz
-append initrd=initrd.img ks=http://192.168.16.320/ks.cfg ksdevice=em1
+append initrd=initrd.img ks=http://192.168.161.144/ks.cfg ksdevice=em1
 EOF
 
 #多网卡安装，提示需要选择网卡 加上ksdevice=em1指定

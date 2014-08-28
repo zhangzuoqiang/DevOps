@@ -1,0 +1,16 @@
+在每一个tomcat的webapps目录下，新建一个目录test，然后在其下面放一个jsp文件。
+然后修改commands.cfg ，在里面添加
+#tomcat2 set
+define command{
+	command_name check_tomcat_8028
+	command_line /usr/local/nagios/libexec/check_http -I $HOSTADDRESS$ -p 8028 -u /test/test.jsp -e 200
+}
+
+然后在servers.cfg中添加tomcat服务就好了。
+
+define service{
+        use                     local-service
+        host_name               localhost
+        service_description     HTTP Tomcat
+        check_command           check_http!check_tomcat_8080
+        }

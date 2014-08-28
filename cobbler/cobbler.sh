@@ -10,8 +10,9 @@
 #关闭selinux
 
 rpm -Uvh 'http://mirrors.ustc.edu.cn/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm'
+http://mirrors.aliyun.com/epel/6/x86_64/epel-release-6-8.noarch.rpm
 yum -y install cobbler tftp-server rsync xinetd httpd
-
+yum -y install cman 
 
 #启动cobblerd服务
 service cobblerd start
