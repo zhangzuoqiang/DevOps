@@ -1,0 +1,1 @@
+installZabbix_agent.sh

@@ -1,0 +1,73 @@
+Zabbix-Server 的数据库大小取决于 NVPS(Number of processed values per second)
+(1)历史数据的保存
+NVPS 值是每秒处理的平均数量,假设有 60000 个监控项,刷新周期为 60 秒,
+那么每秒需要处理的数据为 60000/60=1000(条),表示此时每秒将会向数据库中新增 1000 条数据,这些数据根据设置的历史存储时间保存。
+例如,保存周期为 90 天,每秒处理 1000 条,计算方法为:
+历史数据大小=天数*每秒处理的数据*一天 24 小时*一小时 3600 秒*50Bytes 则需要占用的空间为:
+(90*24*3600)*1000*50=388 800 000 000(B)(约 362GB,假设保存为一年, 则有 362*4=1448GB)
+(2)趋势数据的保存
+每一个 Items 趋势的数据大约为 128B,这取决于数据库类型。 假设有 60 000 个 Items,保存一年的趋势数据,其计算方法为:
+趋势数据大小=监控项*每天 24 小时*一年 365 天*128B 则需要的空间为:
+60 000*24*365*128=67 276 800 000B(约 67GB) 
+(3)事件数据的保存
+每个事件占用 130 B 空间,假设保存一年,则需要的空间为: 1*24*3600*365*130=4 099 680 000B(约 4GB)
+即60 000个监控项,周期为60秒更新数据,保存一年需要362+67+4=44(3 GB) 磁盘空间,实际上,比这占用得更多,需要保存其他更多的数据,因此,应该会 超过 500GB 的数据空间。
+
+
+select table_name,(data_length+index_length)/1024/1014 as total_mb ,table_rows from information_schema.tables where table_schema='zabbix';
+
+src/zabbix_server/housekeeper/housekeeper.c
+采用表分区后,需要关闭 Housekeeper 的功能,此时如果需要清理历史数据, 只需要对表区间对应的历史期限数据进行删除即可。
+zabbix_server.conf
+DisableHousekeeping=1(值设置为1,关闭)
+
+清空历史和趋势表
+use zabbix;
+mysql> truncate table history; 
+mysql> optimize table history; 
+mysql> truncate table history_str; 
+mysql> optimize table history_str; 
+mysql> truncate table history_uint; 
+mysql> optimize table history_uint; 
+mysql> truncate table trends; 
+mysql> optimize table trends; 
+mysql> truncate table trends_uint; 
+mysql> optimize table trends_uint; 
+mysql> truncate table events; 
+mysql> optimize table events;
+
+
+# wget https://raw2.github.com/cdand/zabbixdbpartitioning/ master/partitiontables.sh
+￼
+
+partitiontables.sh
+脚本具备的功能如下。
+1 备份数据库。
+2 对表进行分区间。 
+3 添加定时任务。
+shell# screen -R zabbix 
+shell# bash partitiontables.sh
+￼
+退出 screen,脚本将在后台执行,方法如下: 
+按组合键CRTL+A之后再按组合键CRTL+D
+进入 screen,可以查看后台运行的任务: 
+shell# screen -R zabbix
+
+
+cat /etc/cron.daily/zabbixhousekeeping
+
+
++-----------------------+---------------+------------+
+| table_name            | total_mb      | table_rows |
++-----------------------+---------------+------------+
+| history               | 4300.54437870 |   50324876 |
+| history_log           |    0.04733728 |          0 |
+| history_str           |   39.95266272 |     354798 |
+| history_text          |  248.31558185 |    1854642 |
+| history_uint          | 9600.17357002 |  106920321 |
+| trends                |  517.04930966 |    3806561 |
+| trends_uint           | 1429.96449704 |   16120505 |
+| trigger_depends       |    0.04733728 |         39 |
+| trigger_discovery     |    0.59960552 |       2753 |
+| triggers              |    3.17159763 |       9704 |
++-----------------------+---------------+------------+
