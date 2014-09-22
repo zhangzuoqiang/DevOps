@@ -1,0 +1,5 @@
+curl -XDELETE http://localhost:9200/logstash-2012.12.31
+curl -XPOST http://localhost:9200/logstash-2012.12.31/_optimize
+curl -XPOST http://localhost:9200/_optimize
+
+curl -XPOST http://localhost:9200/logstash-2012.12.31/_stats?clear=true&store=true&pretty=true

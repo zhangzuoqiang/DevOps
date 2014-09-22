@@ -1,0 +1,13 @@
+yum -y install http://yum.theforeman.org/releases/1.6/el6/x86_64/foreman-release.rpm
+yum -y install foreman-installer
+#install
+foreman-installer
+
+foreman-installer -i \
+--foreman-db-database=puppet \
+--foreman-db-host=localhost \
+--foreman-db-password=puppet \
+--foreman-db-port=3306 \
+--foreman-db-username=puppet \
+--foreman-db-type=mysql
+https://fqdn/  "admin" and "changeme".

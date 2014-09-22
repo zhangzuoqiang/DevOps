@@ -1,0 +1,6 @@
+yum install sendmail -y 
+yum install mailx -y
+service sendmail start
+touch body.txt
+echo 'This is test mail'>body.txt
+mail -s 'Test mail' mail@lizhong.me < body.txt 

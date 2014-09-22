@@ -1,0 +1,28 @@
+output {
+  if [type] == "tomcat" and "multiline" in [tags] {
+    email {
+     match => [ "@message", "aaaaa" ]
+     to => "storyskya@gmail.com"
+     from => "monitor@winupon.com"
+     options => [ "smtpIporHost", "smtp.mibnet.com",
+                  "port", "25",
+                  "userName", "monitor@mib.com.cn",
+                  "starttls", "true",
+                  "password", "opmonitor",
+                  "authenticationType", "login"
+                ]
+     subject => "This is a LogStash alert for Tomcat stack traces."
+     body => 'Triggered in: %{message}'
+     via => smtp
+    }
+
+    email {  
+     to => "hzchenkj@163.com"
+     from => "monitor_logstash@winupon.com"
+     subject => "This is a LogStash alert for Tomcat stack traces."
+     body => 'Triggered in: %{message}'
+     via => "sendmail"
+    }
+
+  }
+}
