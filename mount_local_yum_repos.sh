@@ -1,4 +1,5 @@
 #!/bin/bash
+# mount local cdrom as repo
 mkdir /mnt/cdrom
 mount -t auto /dev/cdrom /media/cdrom
 

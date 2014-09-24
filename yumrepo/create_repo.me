@@ -1,0 +1,36 @@
+一、创建软件仓库
+1 安装软件 
+rpm -Uvh http://mirrors.aliyun.com/epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum -y install yum-downloadonly createrepo
+2 创建软件仓库地址 /data/mirrors
+mkdir -pv /data/mirrors/centos/6/{os,updates}/i386/RPMS
+mkdir -pv /data/mirrors/centos/6/{os,updates}/x86_64/RPMS
+3 nginx 软件包下载
+yum install nginx -y --downloadonly --downloaddir=/data/mirrors/centos/6/updates/x86_64/RPMS
+4 创建repo 仓库文件
+createrepo /data/mirrors/centos/6/updates/x86_64
+5 在软件仓库服务器前端安装nginx 来处理安装包请求
+yum -y install nginx
+6 为软件仓库配置mirrors.domain.com
+vi /etc/nginx/conf.d/mirrors.domain.com.conf
+server{
+	listen 80;
+	server_name mirrors.domain.com;
+	root /data/mirrors;
+	index index.html;
+}
+
+7 客户端 创建mirrors.repo 
+vi /etc/yum.repo.d/mirrors.repo
+[base]
+name=CentOS-$releasever -Base
+baseurl=http://mirrors.domain.com/centos/$releasever/os/$basearch/
+enabled=1
+gpgcheck=0
+#released updates [updates]
+name=CentOS-$releasever -Updates
+baseurl=http://mirrors.domain.com/centos/$releasever/updates/$basearch/
+enabled=1
+gpgcheck=0
+
+
