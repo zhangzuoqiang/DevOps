@@ -1,0 +1,59 @@
+puppet dashboard
+
+yum install puppet-dashboard
+
+1 Install MySQL Server
+yum -y install mysql-server
+/etc/init.d/mysqld start
+/usr/bin/mysqladmin -u root password 'motorrobot'
+
+2 Create database for puppet dashboard
+echo "create database puppetdash;" | mysql -uroot -pmotorrobot
+echo "grant all on puppetdash.* to puppdash@localhost identified by 'motorrobot';" | mysql -uroot -pmotorrobot
+echo "flush privileges;" | mysql -uroot -pmotorrobot
+
+# install dashboard from yum now
+yum -y install puppet-dashboard
+cp /usr/share/puppet-dashboard/config/settings.yml.example /usr/share/puppet-dashboard/config/settings.yml
+nano -w /usr/share/puppet-dashboard/config/database.yml
+
+production:
+  database: puppetdash          
+  username: puppdash 
+  password: motorrobot
+  encoding: utf8
+  adapter: mysql
+development:
+  database: puppetdash          
+  username: puppdash 
+  password: motorrobot
+  encoding: utf8
+  adapter: mysql
+
+cd /usr/share/puppet-dashboard
+rake db:migrate 
+
+/etc/init.d/puppet-dashboard start
+# add reporting to puppet.conf
+
+echo "    report = true" >> /etc/puppet/puppet.conf
+echo "" >> /etc/puppet/puppet.conf
+echo "[master]" >> /etc/puppet/puppet.conf
+echo "    reports = store, http" >> /etc/puppet/puppet.conf
+echo "    reporturl = http://192.168.32.147:3000/reports/upload" >> /etc/puppet/puppet.conf
+
+Run puppet manually
+We run puppet manually to make sure it sends a report to the dashboard.
+
+puppetd -t
+chown puppet-dashboard /usr/share/puppet-dashboard/log/
+/sbin/chkconfig puppet-dashboard on
+/sbin/chkconfig puppet-dashboard-workers on
+/sbin/chkconfig mysqld on
+/etc/init.d/puppet-dashboard restart
+/etc/init.d/puppet-dashboard-workers restart
+# browse to http://192.168.32.152:3000
+
+If all went well you should see something like this.
+
+

@@ -1,0 +1,104 @@
+Nginx_Passenger 模式
+1
+yum install mod_ssl ruby-devel rubygems
+yum install gcc-c++ libcurl-devel
+
+gem install rack passenger
+
+passenger-install-nginx-module  
+
+gem source --remove https://rubygems.org/
+gem source --remove http://rubygems.org/
+gem source -a http://ruby.taobao.org/
+gem source -1
+
+2  手工编译安装nginx 加载passenger模块
+cd /usr/local/src
+yum -y install pcre-devel openssl-devel gcc
+wget http://nginx.org/download/nginx-1.6.2.tar.gz
+tar zxvf nginx-1.6.2.tar.gz
+cd nginx-1.6.2
+./configure --user=daemon --group=daemon --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_sub_module --with-md5=/usr/lib --with-sha1=/usr/lib  --with-http_gzip_static_module --with-http_gzip_static_module --add-module='/usr/lib/ruby/gems/1.8/gems/passenger-4.0.52/ext/nginx'
+
+sh ./configure --prefix='/usr/local/nginx' --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-cc-opt='-Wno-error' --add-module='/usr/lib/ruby/gems/1.8/gems/passenger-4.0.52/ext/nginx'
+
+make && make install
+
+与passenger的结合 
+# mkdir -p /etc/puppet/rack/public 
+# cp /usr/share/puppet/ext/rack/files/config.ru /etc/puppet/rack/ 
+# chown -R puppet:puppet /etc/puppet/rack/ 
+# nginx conf里面具体的内容如下 
+
+# Passenger needed for puppet 
+passenger_root /usr/lib/ruby/gems/1.8/gems/passenger-4.0.52;
+passenger_ruby /usr/bin/ruby;
+
+passenger_max_pool_size 15; 
+
+
+
+server { 
+	listen 8140 ssl; 
+	server_name puppet puppet.domain.com; 
+
+	passenger_enabled on; 
+	passenger_set_cgi_param HTTP_X_CLIENT_DN $ssl_client_s_dn; 
+	passenger_set_cgi_param HTTP_X_CLIENT_VERIFY $ssl_client_verify; 
+
+	access_log /usr/local/nginx/logs/puppet_access.log; 
+	error_log /usr/local/nginx/logs/puppet_error.log; 
+
+	root /etc/puppet/rack/public; 
+
+	ssl_certificate /var/lib/puppet/ssl/certs/puppet.domain.com.pem; 
+	ssl_certificate_key /var/lib/puppet/ssl/private_keys/puppet.domain.com.pem; 
+	ssl_crl /var/lib/puppet/ssl/ca/ca_crl.pem; 
+	ssl_client_certificate /var/lib/puppet/ssl/ca/ca_crt.pem; 
+	ssl_ciphers SSLv2:-LOW:-EXPORT:RC4+RSA; 
+	ssl_prefer_server_ciphers on; 
+	ssl_verify_client optional; 
+	ssl_verify_depth 1; 
+	ssl_session_cache shared:SSL:128m; 
+	ssl_session_timeout 5m; 
+} 
+
+server { 
+	listen 80 ssl; 
+	server_name puppet puppet.domain.com; 
+
+	passenger_enabled on; 
+	passenger_set_cgi_param HTTP_X_CLIENT_DN $ssl_client_s_dn; 
+	passenger_set_cgi_param HTTP_X_CLIENT_VERIFY $ssl_client_verify; 
+
+	access_log /usr/local/nginx/logs/puppet_access.log; 
+	error_log /usr/local/nginx/logs/puppet_error.log; 
+
+	root /etc/puppet/rack/public; 
+
+	ssl_certificate /var/lib/puppet/ssl/certs/puppet.domain.com.pem; 
+	ssl_certificate_key /var/lib/puppet/ssl/private_keys/puppet.domain.com.pem; 
+	ssl_crl /var/lib/puppet/ssl/ca/ca_crl.pem; 
+	ssl_client_certificate /var/lib/puppet/ssl/ca/ca_crt.pem; 
+	ssl_ciphers SSLv2:-LOW:-EXPORT:RC4+RSA; 
+	ssl_prefer_server_ciphers on; 
+	ssl_verify_client optional; 
+	ssl_verify_depth 1; 
+	ssl_session_cache shared:SSL:128m; 
+	ssl_session_timeout 5m; 
+} 
+
+#/usr/share/puppet-dashboard/public
+7，验证 
+启动nginx
+# lsof -i:8140 
+可以发现8140端口已经起来 
+# puppet agent --test --server puppet.domain.com 
+
+发现已能正常使用 
+# tail /usr/local/nginx/logs/puppet_access.log 查看nginx日志 
+
+8.调整 
+如果puppetmaster服务已经做成开机启动，记得关掉 
+# chkconfig puppetmaster off 
+# chkconfig nginx on 
