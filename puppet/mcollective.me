@@ -1,0 +1,85 @@
+yum install activemq
+vi /etc/activemq/activemq.xml
+
+<simpleAuthenticationPlugin>
+    <users>
+      <authenticationUser username="${activemq.username}" password="${activemq.password}" groups="admins,everyone"/>
+      <authenticationUser username="mcollective" password="secret" groups="mcollective,admins,everyone"/>
+    </users>
+</simpleAuthenticationPlugin>
+
+cd /etc/activemq
+1 # 生成
+keytool  -import -alias "activemq" -file /var/lib/puppet/ssl/certs/ca.pem  -keystore truststore.jks
+2 # 验证
+keytool -list -keystore truststore.jks
+openssl x509 -in /var/lib/puppet/ssl/certs/ca.pem -fingerprint -md5
+3 #创建keystore
+#cat /var/lib/puppet/ssl/private_keys/activemq.domain.com.pem  /var/lib/puppet/ssl/certs/activemq.domain.com.pem  > temp.pem
+cat /var/lib/puppet/ssl/private_keys/master.domain.com.pem  /var/lib/puppet/ssl/certs/master.domain.com.pem  > temp.pem
+openssl pkcs12 -export -in temp.pem -out master.p12 -name master.domain.com
+keytool  -importkeystore -destkeystore keystore.jks -srckeystore master.p12 -srcstoretype PKCS12 -alias master.domain.com
+4 # 验证
+keytool -list -keystore keystore.jks
+openssl x509 -in /var/lib/puppet/ssl/certs/master.domain.com.pem -fingerprint -md5
+
+
+vi /etc/activemq/activemq.xml （plugins和systemUsage 之间）
+<sslContext>
+	<sslContext keyStore="keystore.jks" keyStorePassword="123456" trustStore="truststore.jks" trustStorePassword="123456" />
+</sslContext>
+禁用openwire 协议
+ <transportConnector name="stomp" uri="stomp+ssl://0.0.0.0:61614?needClientAuth=true"/>
+
+service activemq start
+ netstat -antp|grep 61614
+
+ yum install mcollective-*
+
+
+ ##mcollective client -- puppetmaster
+  puppet cert generate mcollective-servers
+   vi /etc/mcollective/client.cfg 
+
+
+
+main_collective = mcollective
+collectives = mcollective
+libdir = /usr/libexec/mcollective
+logger_type = console
+loglevel = warn
+
+# Plugins
+securityprovider = ssl
+plugin.psk = unset
+
+# SSL plugin setting
+plugin.ssl_server_public = /var/lib/puppet/ssl/certs/mcollective-servers.pem
+plugin.ssl_client_private = /var/lib/puppet/ssl/private_keys/master.domain.com.pem
+plugin.ssl_client_public = /var/lib/puppet/ssl/certs/master.doamin.com.pem
+
+connector = activemq
+plugin.activemq.pool.size = 1
+plugin.activemq.pool.1.host = master.domain.com
+plugin.activemq.pool.1.port = 61614
+plugin.activemq.pool.1.user = mcollective
+plugin.activemq.pool.1.password = 123456
+plugin.activemq.pool.1.ssl = 1
+plugin.activemq.pool.1.ssl.ca = /var/lib/puppet/ssl/certs/ca.pem
+plugin.activemq.pool.1.ssl.cert = /var/lib/puppet/ssl/certs/master.domain.com.pem
+plugin.activemq.pool.1.ssl.key = /var/lib/puppet/ssl/private_keys/master.domain.com.pem
+plugin.activemq.pool.1.ssl.fallback = 0
+
+
+# Facts
+factsource = yaml
+plugin.yaml = /etc/mcollective/facts.yaml
+
+
+ ##mcollective server -- agent node
+ 在puppet master创建puppet modules 
+ mkdir -p /etc/puppet/modules/mcollective/{manifests,templates,files}
+ mkdir -p /etc/puppet/modules/mcollective/files/pem/clients
+ touch /etc/puppet/modules/mcollective/manifests/init.pp
+
+ 
