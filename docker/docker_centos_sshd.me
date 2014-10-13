@@ -1,0 +1,47 @@
+
+service docker start
+
+yum -y install febootstrap
+#第四制作CentOS镜像文件centos6-image目录
+
+febootstrap -i bash -i wget -i yum -i iputils -i iproute -i man -i vim-minimal -i openssh-server -i openssh-clients centos6 centos6-image http://mirrors.aliyun.com/centos/6/os/x86_64/
+#第五制作Docker镜像，镜像名字是centos6-base
+cd centos6-image && tar -c .|docker import - centos6-base
+#第六制作可以ssh登陆的Docker镜像，名字是centos6-ssh
+
+cat >> Dockerfile <<EOF
+
+#Dockerfile
+FROM centos6-base
+MAINTAINER feedao <feedao@163.com>
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN sed -ri 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/g' /etc/pam.d/sshd
+RUN mkdir -p /root/.ssh && chown root.root /root && chmod 700 /root/.ssh
+EXPOSE 22
+RUN echo 'root:123456' | chpasswd
+#RUN curl https://git.oschina.net/feedao/Docker_shell/raw/start/ali-centos.sh | sh
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+CMD /usr/sbin/sshd -D
+#End
+
+EOF
+
+
+docker build -t centos6-ssh Dockerfile
+
+
+经过前面的六个步骤，一个可以登陆的本地docker镜像就制作好了。
+
+用户名是：root，密码是：123456
+
+体验步骤：
+
+创建容器：
+
+docker run -d -p 127.0.0.1:33301:22 centos6-ssh
+ssh登陆容器：
+
+
+ssh root@127.0.0.1 -p 33301
