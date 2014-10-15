@@ -1,0 +1,66 @@
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum localinstall -y epel-release-6-8.noarch.rpm
+yum install -y docker-io
+#yum update --enablerepo=epel-testing -y docker-io
+chkconfig docker on
+service docker start
+docker images
+docker search ubuntu
+docker pull ubuntu:latest
+docker images
+docker run -i -t ubuntu /bin/bash
+
+docker ps
+docker ps -a
+
+docker start 7ddf91c2c9ca
+docker attach 7ddf91c2c9ca
+
+cd ~
+mkdir scripts
+cd scripts/
+wget https://raw.githubusercontent.com/dotcloud/docker/master/contrib/mkimage-yum.sh --no-check-certificate
+chmod u+x mkimage-yum.sh
+cp -p /etc/yum.conf /root/scripts/ 
+cp -p /etc/yum.repos.d/public-yum-ol6.repo /root/scripts 
+
+
+3. Modify the copied configuration file yum.conf by adding the following entry to the file: 
+reposdir=/root/scripts/ 
+Also change the file public-yum-ol6.repo. 
+Change the line: 
+enabled=$uek to: enabled=0 and the line: 
+enabled=$uekr3 to: enabled=0 
+
+4. Start the script mkimage-yum.sh with the following options: 
+[root@oel6-docker scripts]# ./mkimage-yum.sh -y /root/scripts/yum.conf oel6-base 
+
+
+docker images
+docker ps -a
+
+mkdir webserver
+cd webserver
+
+cat >> Dockerfile << EOF
+FROM oel6-base:6.5
+
+MAINTAINER Rob den Braber
+
+RUN yum install -y httpd
+RUN yum clean all
+RUN echo "A simple Docker webserver" > /var/www/html/index.html
+
+EXPOSE 80
+CMD /usr/sbin/httpd -D FOREGROUND
+
+EOF
+
+docker build -t oel6-webserver .
+
+docker ps -a 
+
+docker run -d -p 5001:80 oel6-webserver
+docker ps
+docker logs 12348359b7af
+curl localhost:5001
