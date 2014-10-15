@@ -1,0 +1,104 @@
+##############################################################################
+# Copyright (c) 1991, 2011, Oracle and/or its affiliates. All rights reserved.
+##############################################################################
+
+###########################################
+# Cursors and Library Cache
+###########################################
+open_cursors=300
+
+###########################################
+# Database Identification
+###########################################
+db_name=XE
+
+###########################################
+# File Configuration
+###########################################
+control_files=("/u01/app/oracle/oradata/XE/control.dbf")
+DB_RECOVERY_FILE_DEST_SIZE=10G
+DB_RECOVERY_FILE_DEST=/u01/app/oracle/fast_recovery_area
+
+###########################################
+# Job Queues
+###########################################
+
+###########################################
+# Miscellaneous
+###########################################
+compatible=11.2.0.0.0
+diagnostic_dest=/u01/app/oracle
+#memory_target=1073741824
+pga_aggregate_target=200540160
+sga_target=601620480
+
+###########################################
+# Sessions
+###########################################
+sessions=20
+
+###########################################
+# Security and Auditing
+###########################################
+audit_file_dest=/u01/app/oracle/admin/XE/adump
+remote_login_passwordfile=EXCLUSIVE
+
+###########################################
+# Shared Server
+###########################################
+dispatchers="(PROTOCOL=TCP) (SERVICE=XEXDB)"
+
+###########################################
+# System Managed Undo and Rollback Segments
+###########################################
+undo_management=AUTO
+undo_tablespace=UNDOTBS1
+_no_recovery_through_resetlogs=true
+
+6. Modify the configuration response file xe.rsp located in the Disk1/response directory and change the password settings ORACLE_PASSWORD and ORACLE_CONFIRM_PASSWORD:
+
+[root@oel6-docker oel6-xe]# cat Disk1/response/xe.rsp
+###############################################################################
+# #
+# HTTP port that will be used to access APEX admin page #
+# Default : 8080 #
+# #
+###############################################################################
+ORACLE_HTTP_PORT=8080
+
+###############################################################################
+# #
+# TNS port that will be used to configure listener #
+# Default : 1521 #
+# #
+###############################################################################
+ORACLE_LISTENER_PORT=1521
+
+###############################################################################
+# #
+# Passwords can be supplied for the following two schemas in the #
+# starter database: #
+# SYS #
+# SYSTEM #
+# #
+###############################################################################
+ORACLE_PASSWORD=oracle
+
+###############################################################################
+# #
+# Passwords can be supplied for the following two schemas in the #
+# starter database: #
+# SYS #
+# SYSTEM #
+# #
+# ORACLE_CONFIRM_PASSWORD should be same as ORACLE_PASSWORD #
+# #
+###############################################################################
+ORACLE_CONFIRM_PASSWORD=oracle
+
+###############################################################################
+# #
+# To start/stop listener and database instance up on system boot #
+# #
+###############################################################################
+ORACLE_DBENABLE=y
