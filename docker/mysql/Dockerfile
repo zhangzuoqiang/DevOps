@@ -1,6 +1,6 @@
 FROM centos:latest
 MAINTAINER hzchenkj "hzchenkj@163.com"
-
+#install mysql server
 RUN yum -y install mysql-server
 RUN yum clean all
 RUN touch /etc/sysconfig/network
