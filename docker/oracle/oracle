@@ -1,68 +1,236 @@
-#!/bin/sh
-# chkconfig: 35 80 10
-# description: Oracle auto start-stop script.
-
-#
-# Set ORA_HOME to be equivalent to the $ORACLE_HOME
-# from which you wish to execute dbstart and dbshut;
-#
-# Set ORA_OWNER to the user id of the owner of the
-# Oracle database in ORA_HOME.
-ORA_HOME=/u01/app/oracle/product/10.2.0/db_1
-ORA_OWNER=oracle
-if [ ! -f $ORA_HOME/bin/dbstart ]
-then
-    echo "Oracle startup: cannot start"
-    exit
-fi
-case "$1" in
-'start')
-# Start the Oracle databases:
-echo "Starting Oracle Databases ... "
-echo "-------------------------------------------------" >> /var/log/oracle
-date +" %T %a %D : Starting Oracle Databases as part of system up." >> /var/log/oracle
-echo "-------------------------------------------------" >> /var/log/oracle
-su - $ORA_OWNER -c "$ORA_HOME/bin/dbstart" >>/var/log/oracle
-echo "Done"
-
-# Start the Listener:
-echo "Starting Oracle Listeners ... "
-echo "-------------------------------------------------" >> /var/log/oracle
-date +" %T %a %D : Starting Oracle Listeners as part of system up." >> /var/log/oracle
-echo "-------------------------------------------------" >> /var/log/oracle
-su - $ORA_OWNER -c "$ORA_HOME/bin/lsnrctl start" >>/var/log/oracle
-echo "Done."
-echo "-------------------------------------------------" >> /var/log/oracle
-date +" %T %a %D : Finished." >> /var/log/oracle
-echo "-------------------------------------------------" >> /var/log/oracle
-touch /var/lock/subsys/oracle
-;;
-
-'stop')
-# Stop the Oracle Listener:
-echo "Stoping Oracle Listeners ... "
-echo "-------------------------------------------------" >> /var/log/oracle
-date +" %T %a %D : Stoping Oracle Listener as part of system down." >> /var/log/oracle
-echo "-------------------------------------------------" >> /var/log/oracle
-su - $ORA_OWNER -c "$ORA_HOME/bin/lsnrctl stop" >>/var/log/oracle
-echo "Done."
-rm -f /var/lock/subsys/oracle
-
-# Stop the Oracle Database:
-echo "Stoping Oracle Databases ... "
-echo "-------------------------------------------------" >> /var/log/oracle
-date +" %T %a %D : Stoping Oracle Databases as part of system down." >> /var/log/oracle
-echo "-------------------------------------------------" >> /var/log/oracle
-su - $ORA_OWNER -c "$ORA_HOME/bin/dbshut" >>/var/log/oracle
-echo "Done."
-echo ""
-echo "-------------------------------------------------" >> /var/log/oracle
-date +" %T %a %D : Finished." >> /var/log/oracle
-echo "-------------------------------------------------" >> /var/log/oracle
-;;
-
-'restart')
-$0 stop
-$0 start
-;;
-esac
+#!/bin/bash  
+#  
+# /etc/init.d/oracle  
+#  
+# chkconfig: 2345 02 98  
+# description: oracle is meant to run under Linux Oracle Server  
+# Source function library.  
+. /etc/rc.d/init.d/functions  
+ 
+ORACLE_HOME=/u01/app/oracle/product/10.2.0/db_1
+ORACLE_SID=center
+ORACLE_NAME=oracle 
+LOCKFILE="$ORACLE_HOME/.oracle.lock" 
+RESTART_RETRIES=3 
+DB_PROCNAMES="pmon" 
+LSNR_PROCNAME="tnslsnr" 
+ 
+#RETVAL=0 
+#Start the oracle Server  
+ 
+#The following command assumes that the oracle login will not prompt the password  
+start() {  
+ 
+        echo  "Starting Oracle10g Server... "  
+        tmpfile=/home/oracle/`basename $0`-start.$$  
+        logfile=/home/oracle/`basename $0`-start.log  
+        #  
+        # Set up our sqlplus script.  Basically, we're trying to   
+        # capture output in the hopes that it's useful in the case  
+        # that something doesn't work properly.  
+        #  
+        echo "startup" > $tmpfile  
+        echo "quit" >> $tmpfile  
+ 
+        su - $ORACLE_NAME -c "sqlplus \"/ as sysdba\" < $tmpfile &> $logfile"  
+        if [ $? -ne 0 ]; then  
+                echo "ORACLE_HOME Incorrectly set?"  
+                echo "See $logfile for more information."  
+                return 1  
+        fi  
+ 
+        #   
+        # If we see:  
+        # ORA-.....: failure, we failed  
+        #  
+        rm -f $tmpfile  
+        grep -q "failure" $logfile  
+        if [ $? -eq 0 ]; then  
+                rm -f $tmpfile  
+                echo "ORACLE_SID Incorrectly set?"  
+                echo "See $logfile for more information."  
+                return 1  
+        fi  
+ 
+         echo "Starting listern..."  
+         ((su - $ORACLE_NAME -c "$ORACLE_HOME/bin/lsnrctl start") >> $logfile 2>&1) || return 1  
+         #return $?  
+        if [ -n "$LOCKFILE" ]; then  
+                touch $LOCKFILE  
+        fi  
+ 
+        return 0  
+}  
+ 
+stop() {  
+        echo "Shutting down Oracle10g Server..."  
+ 
+        declare tmpfile  
+        declare logfile  
+ 
+        tmpfile=/home/oracle/`basename $0`-stop.$$  
+        logfile=/home/oracle/`basename $0`-stop.log  
+        if [ -z "$LOCKFILE" ] || [ -f $LOCKFILE ]; then  
+          echo  
+         else  
+          echo "oracle is not run"  
+          return 0  
+        fi  
+ 
+        # Setup for Stop ...  
+        echo "shutdown abort" > $tmpfile  
+        echo "quit" >> $tmpfile  
+ 
+        su - $ORACLE_NAME -c "sqlplus \"/ as sysdba\" < $tmpfile &> $logfile"  
+        if [ $? -ne 0 ]; then  
+                echo "ORACLE_HOME Incorrectly set?"  
+                echo "See $logfile for more information."  
+                return 1  
+        fi  
+ 
+        #   
+        # If we see 'failure' in the log, we're done.  
+        #  
+        rm -f $tmpfile  
+        grep -q failure $logfile  
+        if [ $? -eq 0 ]; then  
+                echo  
+                echo "Possible reason: ORACLE_SID Incorrectly set."  
+                echo "See $logfile for more information."  
+                return 1  
+        fi  
+ 
+        status $LSNR_PROCNAME  
+        if [ $? -ne 0 ] ; then  
+          if [ -n "$LOCKFILE" ]; then  
+             rm -f $LOCKFILE   
+          fi  
+             return 0 # Listener is not running  
+        fi  
+ 
+        ((su - $ORACLE_NAME -c "$ORACLE_HOME/bin/lsnrctl stop") >> $logfile 2>&1) || return 1  
+ 
+        if [ -n "$LOCKFILE" ]; then  
+             rm -f $LOCKFILE  
+        fi  
+        return 0  
+}  
+ 
+get_lsnr_status()  
+{  
+        declare -i subsys_lock=$1  
+ 
+        status $LSNR_PROCNAME  
+        if [ $? == 0 ] ; then  
+                return 0 # Listener is running fine  
+        elif [ $subsys_lock -ne 0 ]; then  
+                return 3  
+        elif [ $? -ne 0 ] ; then  
+               return 1  
+        fi  
+}  
+ 
+get_db_status()  
+{  
+        declare -i subsys_lock=$1  
+        declare -i i=0 
+        declare -i rv=0 
+        declare ora_procname  
+ 
+        for procname in $DB_PROCNAMES ; do  
+ 
+                ora_procname="ora_${procname}_${ORACLE_SID}" 
+ 
+                status $ora_procname  
+                if [ $? -eq 0 ] ; then  
+                        # This one's okay; go to the next one.  
+                        continue  
+                elif [ $subsys_lock -ne 0 ]; then  
+                        return 3  
+                elif  [ $? -ne 0 ] ; then   
+                        return 1  
+                fi  
+ 
+        done  
+}  
+ 
+update_status()  
+{  
+        declare -i old_status=$1  
+        declare -i new_status=$2  
+ 
+        if [ -z "$2" ]; then  
+                return $old_status  
+        fi  
+ 
+        if [ $old_status -ne $new_status ]; then  
+                return 1  
+        fi  
+        return $old_status  
+}  
+status_ias()  
+{  
+        declare -i subsys_lock=1 
+        declare -i last  
+        #  
+        # Check for lock file.  Crude and rudimentary, but it works  
+        #  
+        if [ -z "$LOCKFILE" ] || [ -f $LOCKFILE ]; then  
+                subsys_lock=0 
+        fi  
+ 
+        # Check database status  
+        get_db_status $subsys_lock  
+        update_status $? # Start  
+        last=$?  
+ 
+        # Check & report listener status  
+        get_lsnr_status $subsys_lock  
+        update_status $? $last  
+        last=$?  
+ 
+        # Check & report opmn / opmn-managed process status  
+        #get_opmn_status $subsys_lock  
+        #update_status $? $last  
+        #last=$?  
+ 
+        #  
+        # No lock file, but everything's running.  Put the lock  
+        # file back. XXX - this kosher?  
+        #  
+        if [ $last -eq 0 ] && [ $subsys_lock -ne 0 ]; then  
+                touch $LOCKFILE  
+        fi  
+        return $last  
+}  
+ 
+restart() {  
+         echo -n "Restart Oracle10g Server"  
+           stop  
+             start  
+echo  
+}  
+ 
+case "$1" in  
+start)  
+    start  
+    exit $?  
+    ;;  
+stop)  
+     stop  
+    exit $?  
+;;  
+status)  
+    status_ias  
+    exit $?  
+;;  
+restart|reload)  
+    stop  
+    start  
+;;  
+*)  
+echo "Usage: $0 {start|stop|reload|restart|status}"  
+exit 1  
+;;  
+esac  
+exit 0 

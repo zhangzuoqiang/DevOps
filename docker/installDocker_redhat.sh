@@ -1,6 +1,15 @@
 介绍如何在RedHat/CentOS环境下，安装新版本的Docker。
 
 
+http://mirrors.aliyun.com/epel/6/x86_64/docker-io-1.2.0-3.el6.x86_64.rpm
+wget http://mirrors.aliyun.com/epel/6/x86_64/lxc-1.0.6-1.el6.x86_64.rpm
+wget http://mirrors.aliyun.com/epel/6/x86_64/lua-alt-getopt-0.7.0-1.el6.noarch.rpm
+wget http://mirrors.aliyun.com/epel/6/x86_64/lua-lxc-1.0.6-1.el6.x86_64.rpm
+wget http://mirrors.aliyun.com/epel/6/x86_64/lxc-devel-1.0.6-1.el6.x86_64.rpm
+wget http://mirrors.aliyun.com/epel/6/x86_64/lxc-libs-1.0.6-1.el6.x86_64.rpm
+wget http://mirrors.aliyun.com/epel/6/x86_64/lua-filesystem-1.4.2-1.el6.x86_64.rpm
+wget  http://mirrors.aliyun.com/centos/6/os/x86_64/Packages/lftp-4.0.9-1.el6_5.1.x86_64.rpm
+
 #!/bin/bash
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo

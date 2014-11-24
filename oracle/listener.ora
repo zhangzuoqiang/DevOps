@@ -13,4 +13,19 @@ LISTENER =
  )
 )
 
-~
+
+
+
+SID_LIST_LISTENER =
+        (SID_LIST =
+             (SID_DESC =
+                   (SID_NAME = PLSExtProc)
+                   (ORACLE_HOME = /u01/app/oracle/product/10.2.0/db_1)
+                   (PROGRAM = extproc)
+             )
+            (SID_DESC =
+                   (GLOBAL_DBNAME = center)
+                   (ORACLE_HOME = /u01/app/oracle/product/10.2.0/db_1)
+                   (SID_NAME = center)
+            )
+        )
