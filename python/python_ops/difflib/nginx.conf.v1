@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+			<title>/yorkoliu/pyauto/blob/master/第二章/difflib/nginx.conf.v1 at master_yorkoliu/pyauto - JDcode</title>
+	    		<meta name="description" content="yorkoliu/pyauto:《python自动化运维：技术与最佳实践》附带示例及案例源码"/>
+				<meta name="keywords" content="yorkoliu,pyauto,Git,code,Jdcode" />
+		<meta content="authenticityToken" name="csrf-param" />
+	<meta content="" name="csrf-token" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <link rel="shortcut icon" href="http://www.360buy.com/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="/resource/css/jdzone-index.css?v=05cb61b2e7cadcc18ea72e0ab53621f7" />
+	<link rel="stylesheet" type="text/css" href="/resource/css/animate.css?v=a36be368222de05be5adb58fd32cf4c8" />
+	<link rel="stylesheet" type="text/css" href="/resource/css/common.css?v=bad19682e84b6a6152612dc866f5efe0" />
+	<script type="text/javascript" src="/resource/js/plugins/jquery/jquery-1.7.2.min.js?v=a13f7f208ba534681deadb1ec7a2e54a"></script>
+	<script type="text/javascript" src="/resource/js/common/gitJs.js?v=a7f5d9678491230678a3a0c0f3fc66cf"></script>
+	<script>GitJs.basePath = "";</script>
+	<script type="text/javascript" src="/resource/js/plugins/codeMirror/lib/codemirror.js?v=b3fe2b921fd80a7c8a3810643f6745c7"></script>
+</head>
+<body>
+        <div id="gitHead">
+			<div id="header" class="forum">
+	<div class="w">
+		<div class="logoCss">
+			<a class="jd" href="http://zone.jd.com">代码托管</a><a class="sys" href="https://code.jd.com">代码库</a>
+		</div>
+		<div class="sys-bar">
+							<a href="http://boss.jd.com/login?ReturnUrl=https%3A%2F%2Fcode.jd.com" rel='nofollow'>登录</a>
+									<span class="separator">&nbsp;</span>
+					<a taget="_blank" href="javascript:void(0)" onclick="_gaq.push(['_trackEvent', 'reg', 'reg_code']);_gaq.push(['_link','http://boss.jd.com/reg']);return false;" rel='nofollow'>注册</a>
+									</div>
+	</div>
+</div>
+<div id="nav">
+	<div class="w">
+		<ul class="navitems">
+							<li><a href="http://zone.jd.com">首页<i>&nbsp;</i></a></li>
+				<li><a href="http://bbs.zone.jd.com">开发者论坛<i>&nbsp;</i></a></li>
+				<li><a class="curr" href="https://code.jd.com">京东代码库<i>&nbsp;</i></a></li>
+				<li><a href="http://learn.zone.jd.com">教学中心<i>&nbsp;</i></a></li>
+				<li><a href="http://weike.jd.com/">众包市场<i>&nbsp;</i></a></li>	
+					</ul>			
+		<!--复选下拉区域 结束-->
+		<div class="nav-search">
+			<span class="search-item">
+				<i class="icon"></i>
+				<input class="text" type="text" id="head_key" onkeydown="javascript:Search.searchKey(event, '/pub/search/', 'gitBody', this.value)" name="searchkey" value="" maxLength="64" nullAble="true" dataType="String" />
+			</span>
+		</div>
+	</div>
+</div>
+<div id="subnav" class="mb20">
+	<div class="w">
+		<ul>
+			<li><a href='/pub/explore/feature'>探索</a></li>
+			<li><a href="/my" rel='nofollow'>操控中心</a></li>
+			<li><a href="/my/repositories/new" rel='nofollow'>创建代码库</a></li>
+			<li><a href="/my/repositories/move" rel='nofollow'>一键搬迁</a></li>
+			<li><a href="/my/groups/new" rel='nofollow'>创建群组</a></li>
+			<li><a href="/pub/pick/new" rel='nofollow'>新建代码片段</a></li>
+			<li><a href="/pub/pick">代码墙</a></li>
+			<li><a href="/help/index">新手入门</a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript" src="/resource/js/common/search.js?v=20141124"></script>
+<script>
+$(window).scroll(function () {
+	if ($(window).scrollTop() > 122) {
+		$('#subnav').css('top', $(window).scrollTop()-122);
+	}else {
+		$('#subnav').css('top', '0');
+	}
+});
+</script>		</div>
+        <div id="gitBody"><div id="container" class="pb10">
+	<div class="user">
+		<div class="w clearfix">
+			<div class="more">
+								<a class="btn1" id="projectAttention" href="/yorkoliu/pyauto/star" rel='nofollow'><b class="attention"></b>关注</a><a class="btn1"  id="projectUnattention" href="/yorkoliu/pyauto/unstar" style="display:none"><b class="attention"></b>取消关注</a><span><a href="/yorkoliu/pyauto/stargazers"><b id="projectFansCount">0</b></a></span>
+								<a class="btn1" id="projectFork" href="/yorkoliu/pyauto/fork" rel='nofollow'><b class="derive"></b>派生</a><span> <a href="/yorkoliu/pyauto/network"><b>0</b></a></span>
+			</div>
+			<div class="user-info">
+				<div class="u-img">
+					<img src="http://img30.360buyimg.com/gitwhale/s50x50_jfs/t673/85/545058181/248991/1df0849e/54719496Ne641b962.jpg" width="58" height="58"/>
+				</div>
+				<div class="u-tit">
+					<a href="/yorkoliu">yorkoliu</a>/<a href="/yorkoliu/pyauto" title="yorkoliu/pyauto">pyauto</a>
+									</div>
+				<div class="g-tip fl">
+										（公有代码库）
+									</div>
+			</div>
+		</div>
+	</div>
+	<!--user 结束-->
+	<div class="w">
+		<div class="left">
+			<div class="his-link w100">
+				<a href="/yorkoliu/pyauto/commits/master" class="font-b"><b class="his"></b>提交历史</a>
+			</div>
+			<div class="g-tip mb10">
+				切换分支<div class="tginfo-slt">
+					<div class="i-tginfoslt" id="projectFile_btMainBox">
+						<div class="tg-form">
+							<a class="tg-sltbtn btn-s">
+								<span>master</span>
+							</a> 
+						</div>
+						<div class="select-filter hide" id="projectFile_btBox">
+							<div class="gray-bg slt-text">
+								<input type="text" class="itxt-28" style="padding:0" onkeyUp="projectFile.searchBranch(this)">
+							</div>
+							<div class="tab" id="data">
+								<ul class="clearfix" id="projectFile_branchUl">
+	                           		<li>
+	                                    <a class="selected" href="#tb01"><span>分支</span></a>
+	                      			</li>
+	                                <li>
+	                                    <a href="#tb02"><span>标签</span></a>
+	                                </li>
+                            	</ul>
+							</div>
+							<div class="tab-con" id="tb01">
+								<div class="select-list">
+										                                	<div id="master" class="select-item item-focus"><span></span><a href="/yorkoliu/pyauto/blob/master/第二章/difflib/nginx.conf.v1">master</a></div>
+	                                	                            </div>
+	                            <div class="tab-b"></div>
+	                        </div>
+	                        <div class="tab-con" id="tb02">
+	                            <div class="select-list">
+	                                	                            </div>
+	                            <div class="tab-b"></div>
+	                        </div>                                                               
+                    	</div>
+					</div>
+            	</div>
+            	            	            		            			            			<a class="font-b" href="/yorkoliu/pyauto/tree/master">pyauto</a><span class="font-b">&nbsp;/</span>
+            			            		            			            			<a class="font-b" href="/yorkoliu/pyauto/tree/master/第二章">第二章</a><span class="font-b">&nbsp;/</span>
+            			            		            			            			<a class="font-b" href="/yorkoliu/pyauto/tree/master/第二章/difflib">difflib</a><span class="font-b">&nbsp;/</span>
+            			            		            			            			<span class="font-b">&nbsp;nginx.conf.v1</span>
+            			            		            				</div>
+			<table cellspacing="0" cellpadding="0" class="grid">
+				<tr>
+                    <th colspan="2" class="t-l">最后更新master分支—yorkoliu：update index README.md
+</th>
+                    <th class="t-r"> | <a href="/yorkoliu/pyauto/commit/25e5befda479b1887b3ffc86ff8aa465e2a5f409">25e5befd</a></th>
+                </tr>
+			</table>
+						<table cellspacing="0" cellpadding="0" class="m-grid mt10">
+				<tr>
+					<th>
+						<div class="fl">nginx.conf.v1</div>
+											</th>
+				</tr>
+				<tr>
+					<td class="t-l" style="padding:0">
+						<div style="overflow-x: auto; width:930px">
+							<div id="fileContentContainer"># For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user              nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log;
+#error_log  /var/log/nginx/error.log  notice;
+#error_log  /var/log/nginx/error.log  info;
+
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    
+    # Load config files from the /etc/nginx/conf.d directory
+    # The default server is in conf.d/default.conf
+    include /etc/nginx/conf.d/*.conf;
+
+}
+</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+					</div>
+		<script>
+			$(function(){
+				projectFile.rendering("fileContentContainer", "text", true);
+			});
+		</script>
+		<!--left end-->
+		<div class="right">
+			<div class="icos">
+				<a href="/yorkoliu/pyauto/tree/master" class="fore1"><b></b><span>代码<s></s></span></a>
+				<a href="/yorkoliu/pyauto/issues" class="ufore2"><b></b><span>工单<s></s></span></a>
+				<a href="/yorkoliu/pyauto/pulls" class="ufore3"><b></b><span>合并请求<s></s></span></a>
+				<a href="/yorkoliu/pyauto/fork-tree" class="ufore4"><b></b><span>派生树<s></s></span></a>
+				<a href="/yorkoliu/pyauto/wiki" class="ufore6"><b></b><span>Wiki<s></s></span></a>
+							</div>
+		</div>
+		<!--right end-->
+		<div id="nav_down" class="nav_down"></div>
+		<div id="nav_up" class="nav_up"></div>
+	</div>
+</div>
+<!--container 结束-->
+<script type="text/javascript" src="/resource/js/project/project-common.js?v=20141124"></script>
+<script type="text/javascript" src="/resource/js/plugins/codeMirror/addon/mode/loadmode.js?v=20141124"></script>
+<link href="/resource/js/plugins/codeMirror/lib/codemirror.css?v=20141124" rel="stylesheet" type="text/css"/></div>
+        <script type="text/javascript" src="/resource/wro/basic.js?v=3b97126b8104d879ee67f0aef4c54e05"></script>
+        <div id="gitFoot">
+			<div class="w">
+	<div id="service">
+		<dl class="f-w1">  
+			<dt><b></b><strong>使用指南</strong></dt>
+			<dd>
+				<div><a href="javascript:void(0);" onclick="javascript: window.location.href='http://boss.jd.com/login?ReturnUrl=https%3A%2F%2Fcode.jd.com'" rel='nofollow'>注册/登录</a></div>
+				<div><a href="http://zone.jd.com/help/toUserDeal.htm" taget="_blank" rel='nofollow'>用户协议</a></div>
+				<div><a href="http://zone.jd.com/help/toCodeHelp.htm" taget="_blank" rel='nofollow'>代码库帮助手册</a></div>
+				<div><a href="http://zone.jd.com/help/toGitHelp.htm" taget="_blank" rel='nofollow'>GIT帮助手册</a></div>
+				<div><a href="http://weike.jd.com/home/to_help.htm" taget="_blank" rel='nofollow'>众包帮助手册</a></div>
+				<div><a href="http://zone.jd.com/help/toManageRules.htm" taget="_blank" rel='nofollow'>管理条例</a></div>
+			</dd>
+		</dl>
+		<dl class="f-w2">
+			<dt><b></b><strong>京东云汇</strong></dt>
+			<dd>
+				<div><a href="http://bbs.zone.jd.com" taget="_blank">论坛</a></div>
+				<div><a href="http://learn.zone.jd.com" taget="_blank">教学中心</a></div>
+				<div><a href="https://code.jd.com" taget="_blank">京东代码库</a></div>
+				<div><a href="http://weike.jd.com/" taget="_blank">众包市场</a></div>
+			</dd>
+		</dl>
+		<dl class="f-w3">
+			<dt><b></b><strong>京东电商云</strong></dt>
+			<dd>
+				<div><a href="http://jos.jd.com" taget="_blank">京东宙斯</a></div>
+				<div><a href="http://appengine.jd.com" taget="_blank">京东云擎</a></div>
+				<div><a href="http://maengine.jd.com/" taget="_blank">京东云峰</a></div>
+				<div><a href="http://hosting.jd.com" taget="_blank">京东云鼎</a></div>
+				<div><a href="http://fws.jd.com" taget="_blank">京东服务商门户</a></div>
+				<div><a href="http://zone.jd.com" taget="_blank">京东云汇</a></div>
+			</dd>
+		</dl>
+		<dl class="f-w4">
+			<dt><b></b><strong>服务与支持</strong></dt>
+			<dd>
+				<div><a href="http://zone.jd.com/help/toAboutJdCloud.htm" rel='nofollow'>关于我们</a></div>
+				<div><a href="http://zone.jd.com/help/toContactUs.htm" taget="_blank" rel='nofollow'>联系我们</a></div>
+				<div><a rel="nofollow" target="_blank" href="http://hosting.jd.com/hostingIntr/join">人才招聘</a></div>
+				<div><a href="mailto:jcloud@jd.com" rel='nofollow'>商务合作</a></div>
+			</dd>
+		</dl>
+		<span class="clr"></span>
+	</div>
+</div>	
+<div class="w">
+	<div id="footer">
+		<div class="copyright">
+			Copyright©2004-2014 京东JD.com 版权所有
+		</div>
+	</div>
+</div>
+		</div>
+<script type="text/javascript" src="/resource/js/common/tracking.js?v=dbe4fa7e7742de5c01601195e7fdacb7"></script>
+</body>
+</html>

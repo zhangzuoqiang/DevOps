@@ -17,6 +17,6 @@ BODY = string.join((
 server = smtplib.SMTP()
 server.connect(HOST,"25")
 server.starttls()
-server.login("chenkj@winupon.com","86256876")
+server.login("chenkj@winupon.com","***")
 server.sendmail(FROM,[TO],BODY)
 server.quit()

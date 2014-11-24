@@ -1,0 +1,877 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 24 Nov 2014 07:40:46 GMT
+Content-Type: text/html;charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: no-store
+Pragma: no-cache
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+Set-Cookie: JSESSIONID=951B80BB9280AE30C06DFA3947B0D2DA.wp25; Path=/
+Cache-Control: no-cache, must-revalidate
+Pragma: no-cache
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="lte-ie8"><![endif]-->
+<!--[if gt IE 8]><!--><html><!--<![endif]-->
+<head>
+<meta charset="utf-8" />
+<title>万朋学堂</title>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="shortcut icon" type="image/x-icon"  href="http://file.wanpeng.com/appstore/upload/indexFile/40288199457F37D101457F49E2EB0006.ico?20141119" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="万朋学堂，www.wanpeng.com" />
+
+<script type="text/javascript" >
+  var Domain = {};
+  Domain.file = 'http://file.wanpeng.com/appstore';
+  var rootUrl='www.wanpeng.com';
+  var _hmt = _hmt || [];
+  var _count = "1";
+  var webSite ="http://www.wanpeng.com";
+  var englishExternalType = 2;
+  var showSlimbox = "";
+  var remeberScroll = 0;
+</script>
+<link href="http://file.wanpeng.com/appstore/css/2014/public.css?20141119" rel="stylesheet" />
+<link href="http://file.wanpeng.com/appstore/css/201408/style201408.css?20141119" rel="stylesheet" />
+<script src="http://file.wanpeng.com/appstore/js/jquery.js?20141119" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".dev-show").click(function(){
+    showSlimbox = this.id;
+    var islogin = isLogin();
+    if(!islogin){
+      return;
+    }
+  });
+});
+</script>
+<link href="http://file.wanpeng.com/appstore/js/lightbox/css/lightbox.css" rel="stylesheet" />
+<script src="http://file.wanpeng.com/appstore/js/lightbox/js/lightbox.js"></script>
+</head>
+<body class="body-hasnotebar">
+<div class="index-page">
+    
+
+
+
+
+
+    
+
+
+
+<!-- begin分角色引入页头 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function autoLoginV3(){
+  if(webSite+"/index.htm"==location.href || webSite+"/"==location.href
+          || location.href.indexOf(webSite+"/register.htm") >=0
+          || location.href.indexOf(webSite+"/login.htm") >=0
+          ||location.href.indexOf("/tencent/qqbind.htm") >=0){
+    $(".login").attr("href",webSite+"/autologin.htm");
+    return ;
+  }else{
+    $(".login").attr("href",webSite+"/autologin.htm?url="+location.href);
+    return;
+  }
+}
+</script>
+<div class="topbar">
+        <div class="topbar-inner layout">
+            
+            <!-- 未登录前的template-->
+            <div class="quick">
+                <a class="login" href="#" onclick="autoLoginV3();">登录</a>
+                
+                <a class="register" href="http://www.wanpeng.com/register.htm">注册</a>
+                
+            </div>
+            
+            <p class="sitelinks">
+                <span class="current sitelink">万朋学堂</span>
+                <a class="sitelink"  target="_blank" href="http://www.kehou.com">课后网</a>
+                <a class="sitelink"  target="_blank" href="http://www.edu88.com">教育互联</a>
+                <a class="sitelink"  target="_blank" href="http://www.zdsoft.net">浙大万朋</a>
+            </p>
+        </div><!--/topbar-inner-->
+    </div><!--/topbar-->
+    
+    <div class="header-201408 header">
+        <div class="header-inner layout">
+            <a class="logo" href="http://www.wanpeng.com"><img class="ie6pngfix" alt="万朋学堂" src="http://file.wanpeng.com/appstore/upload/indexFile/4028819A4919C84501491BAB09A604EE.png" onerror="this.src='http://file.wanpeng.com/appstore/images/2014/logo-201408.png'" width="176" height="52" /></a>
+            <div class="tagline">
+                <p class="slogan">让孩子卓越闯天下,让老师桃李满天下!</p>
+                <p class="hotline">客服热线: <span>4000-150-150</span></p>
+            </div>
+        </div><!--/header-inner-->
+    </div><!--/header-201408-->
+    
+    <div class="navbar">
+        <div class="navbar-inner layout">
+            <ul class="nav fn-unstyle fn-clearfix">
+            
+                <li ><a href="http://www.wanpeng.com/topic/homework.htm">在线作业</a></li>
+                
+                <li ><a href="http://www.wanpeng.com/topic/spokenWork.htm">口语作业</a></li>
+                
+                <li ><a href="http://www.wanpeng.com/topic/english.htm">互动英语</a></li>
+                
+                <li ><a href="http://www.wanpeng.com/topic/wholetest.htm">互动测评</a></li>
+                
+                <li ><a href="http://www.wanpeng.com/topic/weike.htm">微课掌上通</a></li>
+                
+                <li ><a href="http://www.wanpeng.com/topic/schoolApply.htm">加入我们</a></li>
+                
+            </ul>
+        </div><!--navbar-inner-->
+    </div><!--/navbar-->
+
+    
+    <div class="masthead">
+        <h1 class="fn-alt">万朋学堂</h1>
+        <div class="slider">
+            <div class="slider-item-A slider-item">
+                <div class="layout">
+                    <div class="slider-contrain">
+                        <div class="txt">
+                            <strong>微课掌上通<br /><span>小应用大世界</span></strong>
+                            <p>私聊、群聊、班级动态分享、班级通知、在线作业...</p>
+                            <p>和我们一起共创家校互动新天地</p>
+                        </div>
+                    </div>
+                </div>
+                <img alt="" src="http://file.wanpeng.com/appstore/images/201408/slide-item-A.png?20141119" data-bgcolor="#3db4db" width="1100" height="538" />
+            </div>
+            <div class="slider-item-B slider-item">
+                <div class="layout">
+                    <div class="slider-contrain">
+                        <div class="txt">
+                            <strong><span>在线作业平台<br />全新上线</span></strong>
+                            <p>辅以优质教学资源与应用，<br />服务于教师、学生和家长的一站式教学平台</p>
+                        </div>
+                    </div>
+                </div>
+                <img alt="" src="http://file.wanpeng.com/appstore/images/201408/slide-item-B.jpg?20141119" data-bgcolor="#69ce6b" width="1100" height="538" />
+            </div>
+        </div><!--/slider-->
+        <div class="masthead-inner layout">
+            <div class="product-thumbs ie6pngfix fn-clearfix">
+                <div class="product-thumb-weike product-thumb ie6pngfix">
+                    <strong class="tit">微课掌上通</strong>
+                    <p class="des">微课掌上通，是一个集家校沟通交流与学生学习于一体的互动式移动学习平台，开放接入丰富优质的学习应用</p>
+                    <p class="action"><a class="js-kefu-trigger" href="javascript:void(0);"><span>免费体验>></span></a></p>
+                </div>
+                <div class="product-thumb-hdyy product-thumb ie6pngfix">
+                    <strong class="tit">互动英语</strong>
+                    <p class="des">结合同步教材和智能口语评分系统，帮助孩子大胆开口说英语，快速提升口语水平</p>
+                    <p class="action"><a id="shouyeyymfsx" class="try dev-show js-try-trigger" hidefocus data-app="hdyy" data-style="freeyy" href="javascript:;"><span>免费体验>></span></a></p>
+                </div>
+                <div class="product-thumb-hdcp product-thumb last ie6pngfix">
+                    <strong class="tit">互动测评</strong>
+                    <p class="des">中小学全科同步学习辅导软件，考点重点解析有效提高学习成绩</p>
+                    <p class="action"><a id="shouyecpmfsx" class="try dev-show js-try-trigger" hidefocus data-app="hdcp" data-style="freecp" href="javascript:;"><span>免费体验>></span></a></p>
+                </div>
+            </div><!--/product-thumbs-->
+            
+            <div class="col-b fn-fl">
+                <div class="wp-bulletin">
+                    <p class="tit">万朋快报</p>
+                    <ul class="fn-unstyle">
+                        
+                                <li><a href="/getExpressNewsDetail.htm?bookNewsId=4028819A4919C84501491A0A483402BF"><span>中国教育信息化创新与发展论坛开幕 万朋引领智慧校园</span></a></li>
+                        
+                                <li><a href="/getExpressNewsDetail.htm?bookNewsId=4028819A4919C84501491A058B9902BB"><span>万朋顺利通过CMMI 3级认证</span></a></li>
+                        
+                                <li><a href="/getExpressNewsDetail.htm?bookNewsId=4028819A4919C845014919F1A3BB0233"><span>东莞阳光网报道，东莞市全市开通微课掌上通</span></a></li>
+                        
+                                <li><a href="/getExpressNewsDetail.htm?bookNewsId=402881993F530FDF013F656E24F201FA"><span>万朋互动英语，足不出户就能学好纯正英语</span></a></li>
+                        
+                                <li><a href="/getExpressNewsDetail.htm?bookNewsId=402881993EA5A440013EA7C6625E005B"><span>万朋学堂在武汉成功举办新产品发布会</span></a></li>
+                        
+                    </ul>
+                    <p class="more"><a href="/expressNewsList.htm">更多>></a></p>
+                </div><!--/wp-bulletin-->
+                
+                <div class="join-us">
+                    <p class="audience">已经有 <span class="num">800</span> 所幼儿园、<span class="num">500</span> 所小学、<br /><span class="num">300</span> 所中学、<span class="num">100</span> 所中职</p>
+                    <p class="sum">共 <span class="num">32,135,047</span> 人正在使用</p>
+                    <a href="/topic/schoolApply.htm">立即申请加入我们</a>
+                    <p class="hotline">客服热线：<span>4000-150-150</span></p>
+                </div><!--/join-us-->
+            </div><!--/col-b-->
+        </div><!--/masthead-inner-->
+    </div><!--/masthead-->
+    
+    <div class="content">
+        <div class="floor row">
+            <div class="floor-inner row-inner layout fn-clearfix">
+                <span class="floor-mark ie6pngfix">1F</span>
+                <!--[if ie 6]><div class="ghostglass"></div><![endif]-->
+                
+                <div class="basic-intro fn-fl">
+                    <h2 class="tit">微课掌上通</h2>
+                    <table class="des"><tr><td>《微课掌上通》<span class="num">8</span> 大特点<br />助力学校、培训机构，有效实现信息化教育模式，提高升学率！</td></tr></table>
+                    <ul class="list fn-unstyle">
+                        <li>帮助老师轻松完成繁重的家校沟通工作</li>
+                        <li>帮助学生提高成绩，增进学习兴趣和自信</li>
+                        <li>帮助家长随时了解孩子在校情况</li>
+                    </ul>
+                    <p class="action">
+                        <a class="js-kefu-trigger" href="javascript:void(0);">申请免费体验</a>
+                        <a class="js-kefu-trigger" href="javascript:void(0);">咨询客服</a>
+                    </p>
+                </div>
+                
+                <div class="feature-thumbs fn-fr">
+                    <div class="thumbs-container fn-clearfix">
+                        <div class="feature-thumb">
+                            <a class="thumb-jxhd thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>家校互动</p><p class='thumb-des'>老师可以通过微课掌上通给家长发送通知、作业、日常表现、成绩等信息</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_jxhd_big.png" target="_blank"></a>
+                            <p class="tit">家校互动</p>
+                            <p class="des">老师可以通过微课掌上通给家长发送通知、作业、日常表现、成绩等信息</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-bjq thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>班级圈</p><p class='thumb-des'>老师通过图片、文字、语音发送班级动态，家长可以对动态评论和点赞</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_bjq_big.png" target="_blank"></a>
+                            <p class="tit">班级圈</p>
+                            <p class="des">老师通过图片、文字、语音发送班级动态，家长可以对动态评论和点赞</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-zxzy thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>在线作业</p><p class='thumb-des'>在线就能答题，轻松完成作业</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_zxzy_big.png" target="_blank"></a>
+                            <p class="tit">在线作业</p>
+                            <p class="des">在线就能答题，轻松完成作业</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-gzh thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>公众号</p><p class='thumb-des'>发布学校通知、校园动态、教育资讯，看的见的校园生活，拉近家校距离</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_gzh_big.png" target="_blank"></a>
+                            <p class="tit">公众号</p>
+                            <p class="des">发布学校通知、校园动态、教育资讯，看的见的校园生活，拉近家校距离</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-pakqxx thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>平安考勤信息</p><p class='thumb-des'>进校、离校打卡，平安常伴左右</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_pakqxx_big.png" target="_blank"></a>
+                            <p class="tit">平安考勤信息</p>
+                            <p class="des">进校、离校打卡，平安常伴左右</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-ssgt thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>实时沟通</p><p class='thumb-des'>家长、学生、老师实时互动沟通！随时随地了解学生学习情况</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_ssgt_big.png" target="_blank"></a>
+                            <p class="tit">实时沟通</p>
+                            <p class="des">家长、学生、老师实时互动沟通！随时随地了解学生学习情况</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-xxyy thumb" data-lightbox="weike" data-title="<p class='thumb-tit'>学习应用</p><p class='thumb-des'>为学生提供丰富优质的学习应用</p>" href="http://file.wanpeng.com/appstore/images/201408/weike_xxyy_big.png" target="_blank"></a>
+                            <p class="tit">学习应用</p>
+                            <p class="des">为学生提供丰富优质的学习应用</p>
+                        </div>
+                    </div>
+                </div><!--/feature-thumbs-->
+            </div><!--/row-inner-->
+        </div><!--/floor-->
+        
+        <div class="floor row">
+            <div class="floor-inner row-inner layout fn-clearfix">
+                <span class="floor-mark ie6pngfix">2F</span>
+                <!--[if ie 6]><div class="ghostglass"></div><![endif]-->
+                
+                <div class="basic-intro fn-fl">
+                    <h2 class="tit">互动测评</h2>
+                    <table class="des"><tr><td>中小学综合学习优质辅导软件。</td></tr></table>
+                    <ul class="list fn-unstyle">
+                        <li>丰富教材资源更有力提高孩子的综合学习成绩</li>
+                        <li>自主选择课前预习和课后复习让孩子更容易高人一等</li>
+                        <li>考点难点综合解析，精准提高学习效率</li>
+                    </ul>
+                    <p class="action">
+                        <a id="shouyecpmfsx" class="try dev-show js-try-trigger" hidefocus data-app="hdcp" data-style="freecp" href="javascript:;">免费体验</a>
+                        <a id="shouyecpdg" class="buy dev-show js-buy-trigger" hidefocus data-app="hdcp" data-style="buycp" href="javascript:;" onclick="buyClick(3);">立即购买</a>
+                    </p>
+                </div>
+                
+                <div class="feature-thumbs fn-fr">
+                    <div class="thumbs-container fn-clearfix">
+                        <div class="feature-thumb">
+                            <a class="thumb-kqyx thumb" data-lightbox="hdcp" data-title="<p class='thumb-tit'>课前预习</p><p class='thumb-des'>梳理知识点、重难点，帮助学生有侧重点地预习</p>" href="http://file.wanpeng.com/appstore/images/201408/hdcp_kqyx_big.png" target="_blank"></a>
+                            <p class="tit">课前预习</p>
+                            <p class="des">梳理知识点、重难点，帮助学生有侧重点地预习</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-khlx thumb" data-lightbox="hdcp" data-title="<p class='thumb-tit'>课后练习</p><p class='thumb-des'>基础知识测试，分析知识点掌握效果</p>" href="http://file.wanpeng.com/appstore/images/201408/hdcp_khlx_big.png" target="_blank"></a>
+                            <p class="tit">课后练习</p>
+                            <p class="des">基础知识测试，分析知识点掌握效果</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-zdtx thumb" data-lightbox="hdcp" data-title="<p class='thumb-tit'>重点题型</p><p class='thumb-des'>重点难点解析，帮助学生学会举一反三，融会贯通</p>" href="http://file.wanpeng.com/appstore/images/201408/hdcp_zdtx_big.png" target="_blank"></a>
+                            <p class="tit">重点题型</p>
+                            <p class="des">重点难点解析，帮助学生学会举一反三，融会贯通</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-zhxl thumb" data-lightbox="hdcp" data-title="<p class='thumb-tit'>综合训练</p><p class='thumb-des'>在线就能答题，轻松完成作业</p>" href="http://file.wanpeng.com/appstore/images/201408/hdcp_zhxl_big.png" target="_blank"></a>
+                            <p class="tit">综合训练</p>
+                            <p class="des">在线就能答题，轻松完成作业</p>
+                        </div>
+                    </div>
+                </div><!--/feature-thumbs-->
+            </div><!--/row-inner-->
+        </div><!--/floor-->
+        
+        <div class="floor row">
+            <div class="floor-inner row-inner layout fn-clearfix">
+                <span class="floor-mark ie6pngfix">3F</span>
+                <!--[if ie 6]><div class="ghostglass"></div><![endif]-->
+                
+                <div class="basic-intro fn-fl">
+                    <h2 class="tit">互动英语</h2>
+                    <table class="des"><tr><td>智能口语评分系统,帮孩子大胆开口说英语，快速提升口语水平。</td></tr></table>
+                    <ul class="list fn-unstyle">
+                        <li>网页、安卓、苹果多终端英语应用，实现实时随地学英语</li>
+                        <li>为家长们实时提供孩子学习的评估报告，随时了解情况</li>
+                        <li>先进口语评分系统，迅速纠正孩子发音问题</li>
+                    </ul>
+                    <p class="action">
+                    <a id="shouyeyymfsx" class="try dev-show js-try-trigger" hidefocus data-app="hdyy" data-style="freeyy" href="javascript:;">免费体验</a>
+                    <a id="shouyeyydg" class="buy dev-show js-buy-trigger" hidefocus data-app="hdyy" data-style="buyyy" href="javascript:;" onclick="buyClick(2);">立即购买</a>
+                </p>
+                </div>
+                
+                <div class="feature-thumbs fn-fr">
+                    <div class="thumbs-container fn-clearfix">
+                        <div class="feature-thumb">
+                            <a class="thumb-kyxl thumb" data-lightbox="hdyy" data-title="<p class='thumb-tit'>口语训练</p><p class='thumb-des'>从流利度、韵律度、完整度和准确度等,多维度进行精确评分不断提升学生口语发音水平</p>" href="http://file.wanpeng.com/appstore/images/201408/hdyy_kyxl_big.png" target="_blank"></a>
+                            <p class="tit">口语训练</p>
+                            <p class="des">从流利度、韵律度、完整度和准确度等,多维度进行精确评分不断提升学生口语发音水平</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-dcjzlx thumb" data-lightbox="hdyy" data-title="<p class='thumb-tit'>单词句子练习</p><p class='thumb-des'>提供每个单元的单词、句子列表，让学生逐一训练、一个不落,评分结果精确到音素级别</p>" href="http://file.wanpeng.com/appstore/images/201408/hdyy_dcjzlx_big.png" target="_blank"></a>
+                            <p class="tit">单词句子练习</p>
+                            <p class="des">提供每个单元的单词、句子列表，让学生逐一训练、一个不落,评分结果精确到音素级别</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-txxl thumb" data-lightbox="hdyy" data-title="<p class='thumb-tit'>听写训练</p><p class='thumb-des'>帮助学生提高单词拼写能力，做到听音能拼，见词能读</p>" href="http://file.wanpeng.com/appstore/images/201408/hdyy_txxl_big.png" target="_blank"></a>
+                            <p class="tit">听写训练</p>
+                            <p class="des">帮助学生提高单词拼写能力，做到听音能拼，见词能读</p>
+                        </div>
+                    </div>
+                </div><!--/feature-thumbs-->
+            </div><!--/row-inner-->
+        </div><!--/floor-->
+        
+        <div class="floor row">
+            <div class="floor-inner row-inner layout fn-clearfix">
+                <span class="floor-mark ie6pngfix">4F</span>
+                <!--[if ie 6]><div class="ghostglass"></div><![endif]-->
+                
+                <div class="basic-intro fn-fl">
+                    <h2 class="tit">在线作业</h2>
+                    <table class="des"><tr><td>教育信息化的创新应用，架起老师、学生、家长“心”的沟通桥梁。</td></tr></table>
+                    <ul class="list fn-unstyle">
+                        <li>为老师助力:海量教学资源，在线布置作业</li>
+                        <li>为学生减负:轻松提高学习成绩，同步作业，口语作业</li>
+                        <li>为家长分忧:实时掌握孩子学习动态，学业数据分析</li>
+                    </ul>
+                    <p class="action">
+                        <a class="js-kefu-trigger" href="javascript:void(0);">申请免费体验</a>
+                        <a class="js-kefu-trigger" href="javascript:void(0);">咨询客服</a>
+                    </p>
+                </div>
+                
+                <div class="feature-thumbs fn-fr">
+                    <div class="thumbs-container fn-clearfix">
+                        <div class="feature-thumb">
+                            <a class="thumb-hltk thumb" data-lightbox="zxzy" data-title="<p class='thumb-tit'>海量题库</p><p class='thumb-des'>覆盖小初高所有科目题型并配套解析！</p>" href="http://file.wanpeng.com/appstore/images/201408/zxzy_hltk_big.png" target="_blank"></a>
+                            <p class="tit">海量题库</p>
+                            <p class="des">覆盖小初高所有科目题型并配套解析！</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-zzbt thumb" data-lightbox="zxzy" data-title="<p class='thumb-tit'>自主编题</p><p class='thumb-des'>自主编题并支持Flash可视化编辑特殊符号公式</p>" href="http://file.wanpeng.com/appstore/images/201408/zxzy_zzbt_big.png" target="_blank"></a>
+                            <p class="tit">自主编题</p>
+                            <p class="des">自主编题并支持Flash可视化编辑特殊符号公式</p>
+                        </div>
+                        <div class="feature-thumb">
+                            <a class="thumb-zxdt thumb" data-lightbox="zxzy" data-title="<p class='thumb-tit'>在线答题</p><p class='thumb-des'>提供在线式的答题方式，学生答完之后即可看到答题结果!并发送学习报告给家长</p>" href="http://file.wanpeng.com/appstore/images/201408/zxzy_zxdt_big.png" target="_blank"></a>
+                            <p class="tit">在线答题</p>
+                            <p class="des">提供在线式的答题方式，学生答完之后即可看到答题结果!并发送学习报告给家长</p>
+                        </div>
+                    </div>
+                </div><!--/feature-thumbs-->
+            </div><!--/row-inner-->
+        </div><!--/floor-->
+    </div><!--/content-->
+    
+    
+    
+<!--     显示遮罩层的时候 可以考虑给body设置overflow:hidden属性 从而禁止用户进行窗口滚动操作-->
+    <!-- <div class="gmask fn-hide"></div> -->
+
+    <div class="multi-role-popbox fn-hide">
+        <p class="tip fn-tc">系统检查到您的手机绑定多个账户，请选择其中一个登录!</p>
+        <ul class="role-list fn-unstyle">
+        </ul>
+        <div class="ft fn-tc">
+            <button class="btn" type="button" hidefocus>取消</button>
+        </div>
+    </div><!--/multi-role-popbox-->
+    
+</div><!--/index-page-->
+
+<!--[if IE 6]>
+<script src="../js/DD_belatedPNG.js"></script>
+<script>
+    DD_belatedPNG.fix('.ie6pngfix');
+</script>
+<![endif]-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--=透明层 S-->
+<div class="gray" style="display: none;" id="gray1"></div>
+<!--=透明层 E-->
+
+    <!-- 门户公用弹出层 -->
+     <div class="popupBox01 popupBox fn-hide">
+        <button class="close" type="button">关闭</button>
+        <div class="module" style="width:500px;">
+            <div class="hd">
+                <h3 class="module-title">门户页面公共弹出层popupBox01测试</h3>
+            </div>
+            <div class="bd">
+                <div class="fn-tc">
+                    <p>请不要混用在线作业和门户的样式表。</p>
+                    <p class="fn-tr">没有特殊说明，真正公用的除过base.css和jQuery等插件外，都是井水不犯河水的。</p>
+                    <p class="fn-tl">根据现有国情，秉承编码管理理念：分-合-分，不是！，合-分-合。</p>
+                    <p class="fn-tl">可通过调节.module上的width来调整弹出层宽度，通过fn-tl、fn-tc、fn-tr来控制文字或按钮的水平排版。（仅限门户）</p>
+                </div>
+                <div class="fn-tc">
+                    <button class="btn btn01" type="button">确定</button>
+                </div>
+                <div class="fn-tr">
+                    <button class="btn btn01" type="button">确定</button>
+                </div>
+            </div>
+        </div>
+    </div><!--/popupBox01-->
+    <div class="popupBox01 popupBox fn-hide" id="chooseOrderDiv">
+        <button class="close" type="button" onclick="closePopupBox('chooseOrderDiv');">关闭</button>
+        <div class="module" style="width:300px;">
+            <div class="hd">
+                <h3 class="module-title">提示</h3>
+            </div>
+            <div class="bd">
+                <div class="fn-tc">
+                    <p></p>
+                    <p id="orderContent"></p>
+                    <p></p>
+                </div>
+                <div class="fn-tc">
+                    <button class="btn btn01" type="button" onclick="closePopupBox('chooseOrderDiv');">确定</button>
+                </div>
+            </div>
+        </div>
+    </div><!--/popupBox01-->
+      <!-- 快捷登录弹出层 -->
+    <div class="pop-login popupBox01 popupBox fn-hide" id="loginFrameDiv">
+        <button class="close" type="button" onclick="closeLoginForm();">关闭</button>
+        <div class="module">
+            <div class="hd">
+                <h3 class="module-title fn-altxt">快捷登录</h3>
+            </div>
+            <div class="bd fn-clearfix">
+                
+                <div class="open-login fn-fl">
+                    <p class="tit fn-tc">无需注册，QQ帐号也能登录</p>
+                    <p class="fn-tc"><a id="qqLoginLk" href="javascript:;" onclick="qqlogin();"><img alt="用QQ帐号登录" width="128" height="32" src="http://file.wanpeng.com/appstore/images/2014/qqlogin.png" /></a></p>
+                </div>
+                
+                <form class="login-register-form global-form fn-fl">
+                    <div id="FrameNameDiv" class="field">
+                        <label for="username">帐&nbsp;&nbsp;号</label>
+                        <input class="input-txt" id="FrameUsername" name="username" type="text" placeholder="微课号/邮箱/手机号" />
+                    </div>
+                    <div id="FramePasswordDiv" class="field-error field">
+                        <label for="password">密&nbsp;&nbsp;码</label>
+                        <input class="input-txt" id="FramePassword" name="password" type="password" onkeyup="if(13==event.keyCode){login()}"/>
+                    </div>
+                    <div id="verifyField" class="verifyCode-field field fn-hide">
+                        <label for="verifyCode">验证码</label>
+                        <input class="input-txt" id="FrameVerifyCode" name="verifyCode" type="text" />
+                        <img class="verifyCode-img" id="verifyImage" height="31" src="http://www.wanpeng.com/registerCode.htm" />
+                        <a  href="#">看不清，换一张</a>
+                    </div>
+                    <div class="opt-field field">
+                        <label class="loginauto"><input id="FrameLoginauto" class="checkbox" name="loginauto" type="checkbox" /> 下次自动登录</label>    
+                    </div>
+                    <div class="action-field field">
+                        <button class="submitBtn" type="button" id="FrameLoginBtn" onclick="login();">登录</button>
+                        
+                        <a class="forgetpw" href="http://www.wanpeng.com/forgotPassword.htm">忘记密码</a>
+                    </div>
+                    <input id="FramePassprotUrl" type="hidden" value="http://passport.wanpeng.com"/>
+                    <input id="FrameServerId" type="hidden" value="503301"/>
+                </form><!--/login-register-form-->
+            </div><!--/bd-->
+        </div><!--/module-->
+    </div><!--/pop-login-->
+    
+    <div class="popupBox01 popupBox fn-hide" id="alipayConfirmDiv">
+        <button class="close" type="button" onclick="closePopupBox('alipayConfirmDiv');">关闭</button>
+        <div class="module" style="width:340px;">
+            <div class="hd">
+                <h3 class="module-title">付款遇到问题</h3>
+            </div>
+            <div class="bd">
+                <div class="popContent">
+                    <p>付款完成前请不要关闭此窗口。</p>
+                    <p>完成付款后根据您的情况点击下面的按钮：</p>
+                    <p class="red">请在新开的页面上完成付款后再选择。</p>
+                </div>
+                <div class="popAction fn-tc">
+                    <button class="submit ie6pngfix" type="button" onclick="location.href='http://www.wanpeng.com/userstore/index.htm'">已完成付款</button>
+                    <button class="cancel ie6pngfix" type="button" onclick="location.href='http://www.wanpeng.com/footPage/wanpeng.htm?name=pay'">付款遇到问题</button>
+                </div>
+            </div>
+        </div>
+    </div><!--/popupBox01-->  
+
+
+
+
+
+
+<!-- begin分角色引入页头 -->
+
+
+
+    <div class="footer">
+        <div class="footer-inner layout fn-clearfix">
+            <div class="subscribe-us fn-fr">
+                <p>关注我们：</p>
+                <a href="http://weibo.com/iwanpeng" title="关注万朋学堂新浪微博" target="blank"><img alt="新浪微博logo" src="http://file.wanpeng.com/appstore/images/2014/weibo.png" width="32" height="32" /></a>
+                <a href="http://user.qzone.qq.com/2658901020/" title="关注万朋学堂QQ空间" target="blank"><img alt="QQ空间logo" src="http://file.wanpeng.com/appstore/images/2014/qzone.png" width="32" height="32" /></a>
+                <div class="qr">
+                    <img alt="微信logo" src="http://file.wanpeng.com/appstore/images/2014/weixin.png" width="32" height="32" /><div class="otherQr box-shadow01 fn-hide">
+                        <div class="item last">
+                            <div class="img"><img alt="微信二维码" src="http://file.wanpeng.com/appstore/images/2014/weixiner.png" width="80" height="80" /></div>
+                            <div class="txt">
+                                <h3 class="tit">微信</h3>
+                                <p>扫描二维码 <br />加我为微信好友吧</p>
+                            </div>
+                        </div>
+                        <span class="arrow"></span>
+                    </div><!--/ohterQr-->
+                </div><!--/qr-->
+                <div class="qr fn-unstyle">
+                  <img alt="二维码logo" src="http://file.wanpeng.com/appstore/images/2014/qr.png" width="32" height="32" /><div class="otherQr box-shadow01 fn-hide">
+                      <div class="item">
+                          <div class="img"><img alt="微博二维码" src="http://file.wanpeng.com/appstore/images/2014/weiboer.png" width="80" height="80" /></div>
+                          <div class="txt">
+                              <h3 class="tit">微博</h3>
+                              <p>扫描二维码 <br />关注我的微博吧</p>
+                          </div>
+                      </div>
+                      <div class="item last">
+                          <div class="img"><img alt="微信二维码" src="http://file.wanpeng.com/appstore/images/2014/weixiner.png" width="80" height="80" /></div>
+                          <div class="txt">
+                              <h3 class="tit">微信</h3>
+                              <p>扫描二维码 <br />加我为微信好友吧</p>
+                          </div>
+                      </div>
+                      <span class="arrow"></span>
+                  </div><!--/ohterQr-->
+                </div><!--/qr-->
+            </div><!--/subscribe-us-->
+            <p>
+                <a href="/footPage/wanpeng.htm?name=wanpeng">关于万朋</a>
+                <a href="/footPage/wanpeng.htm?name=wanpeng#hzhb">合作伙伴</a>
+                <a href="/footPage/leaveWord.htm?name=leaveWord">留言反馈</a>
+                <a href="/zixun/">教育资讯</a>
+                <a href="/footPage/map.htm?name=map">网站地图</a>
+                <a href="/footPage/private.htm?name=private">隐私声明</a>
+                <a href="/footPage/wanpeng.htm?name=contact">联系我们</a>
+            </p>
+            <p>Copyright© 2013 浙江万朋网络技术有限公司版权所有  备案号:浙B2-20100206-1 增值电信业务许可证浙B2-20100206</p>
+            <p class="authority">
+                <a href="http://www.pingpinganan.gov.cn/" target="_blank"><img alt="" src="http://file.wanpeng.com/appstore/images/2014/authority01.png" width="40" height="35" /></a>
+                <a href="http://122.224.75.236/wzba/login.do?method=hdurl&doamin=http://www.wanpeng.com/&id=330108000053554&SHID=1223.0AFF_NAME=com.rouger.gs.main.UserInfoAff&AFF_ACTION=qyhzdetail&PAGE_URL=ShowDetail" target="_blank"><img alt="" src="http://file.wanpeng.com/appstore/images/2014/authority02.png" width="40" height="35" /></a>
+            </p>
+        </div><!--/footer-inner-->
+    </div><!--/footer-->
+    
+    <div id="sidebg">
+        <div id="sidetools">
+            <a class="service ie6pngfix" id="kefu" href="#" rel="nofollow"><span class="tip"><span class="arrow">◆</span>在线咨询</span></a>
+            <a class="feedback ie6pngfix" href="/footPage/leaveWord.htm?name=leaveWord" rel="nofollow" target="_blank"><span class="tip"><span class="arrow">◆</span>留言反馈</span></a>
+            <a class="download ie6pngfix" href="/download/" rel="nofollow" target="_blank"><span class="tip"><span class="arrow">◆</span>下载中心</span></a>
+        </div>
+        
+        <div id="scrolltools" class="fn-sr">
+            <a class="gotop ie6pngfix" href="#" rel="nofollow"><span class="tip"><span class="arrow">◆</span>返回顶部</span></a>
+        </div>
+    </div>
+
+    <!-- 在线客服dialog -->
+    <div id="dialog-tip">
+        <div id="dialog-header">
+            <span class="ie6pngfix" id="dialog-close"></span>
+        </div>
+        <div id="dialog-cnt"></div>
+    </div>
+    
+
+
+
+
+
+<div style="display:none;"><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffd5a6e4f24b0d5b73e04209e269cf350' type='text/javascript'%3E%3C/script%3E"));
+</script></div>
+<script src="http://file.wanpeng.com/appstore/js/jquery.slides.min.js?20141119" type="text/javascript"></script>
+<script src="http://file.wanpeng.com/appstore/js/jquery.mousewheel.js?20141119" type="text/javascript"></script>
+<script src="http://file.wanpeng.com/appstore/js/jquery.easydrag.js?20141119"></script>
+<script src="http://file.wanpeng.com/appstore/js/2014/public.js?20141119" type="text/javascript"></script>
+<script src="http://file.wanpeng.com/appstore/js/appstore-v2.js?20141119" type="text/javascript"></script>
+
+
+<script src="http://file.wanpeng.com/appstore/js/md5.js?20141119" type="text/javascript"></script>
+<script src="http://file.wanpeng.com/appstore/js/sha1.js?20141119" type="text/javascript"></script>
+<script src="http://file.wanpeng.com/appstore/js/appstore-v2.js?20141119" type="text/javascript"></script>
+<script type="text/javascript">
+// $(function(){
+
+    /* 横幅切换
+     ******************************************************************/
+    $('.slider .slider-item').each(function(){
+        $img = $(this).find('img:not(".txt img")');
+        if(1 == $img.length){
+            $(this).css({
+                'background-image': 'url(' + $img.attr('src') + ')',
+                'background-color': $img.data('bgcolor') || '#f6f6f6'
+            });
+        }
+    });
+    $('.slider').slidesjs({
+        width: '100%',
+        height: 480,
+        play: {
+            effect: "fade",
+            interval: 5566,
+            auto: true,
+            pauseOnHover: false,
+            restartDelay: 3322
+        },
+        navigation: {
+            active: false
+        },
+        pagination: {
+            active: true,
+            effect: "fade"
+        },
+        effect: {
+            fade: {
+                speed: 1000,
+                crossfade: true
+            }
+        },
+        /* Can't restart animation after clicking on navigation http://stackoverflow.com/questions/17201869/jquery-slidesjs-cant-restart-animation-after-clicking-on-navigation */
+        callback: {
+            complete: function(number) {
+                var pluginInstance = $('.slider').data('plugin_slidesjs');
+
+                pluginInstance.play(false);
+                
+                setTimeout(function() {
+                    pluginInstance.play(true);
+                }, pluginInstance.options.play.interval);
+            }
+        }
+    });
+    $('.slidesjs-pagination-item a').attr('hidefocus', 'true');
+    if(ie6){
+        function initBannerWidth(){
+            var bannerWidth = $window.width() < 990 ? 990 : $window.width();
+            $('.banner, .slider, .slidesjs-container, .slidesjs-control').width(bannerWidth);
+        }
+        var resizeDelayTimer;
+        $window.resize(function(){
+            clearTimeout(resizeDelayTimer);
+            resizeDelayTimer = setTimeout(initBannerWidth, 100);
+        });
+    }
+    
+    /* 横幅切换
+     ******************************************************************/
+    
+    $('.feature-thumbs').each(function(){
+        var $this = $(this),
+            $container = $this.find('.thumbs-container'),
+            thumbs_length = $this.find('.feature-thumb').length;
+        if(thumbs_length > 3)
+        {
+            /*
+             * 已经是最后一个了
+             * 已经是第一个了
+             */
+            $this.append('<div class="thumbs-navigation"><a class="prev disabled" href="#" hidefocus>上一个</a><a class="next" href="#" hidefocus>下一个</a></div><p class="tip-navigation" style="display: none;"></p>');
+            var container_max_offset = (thumbs_length - 3)*271,
+                $tip = $this.find('.tip-navigation');
+            $this.find('.next').click(function(e){
+                e.preventDefault();
+                if(Math.abs(parseInt($container.css('margin-left'), 10)%271) == 0)
+                {
+                    if(parseInt($container.css('margin-left'), 10) + container_max_offset == 0)
+                    {
+                        $tip.text('已经是最后一个了').show(0).delay(1000).hide(0);
+                    }
+                    if(parseInt($container.css('margin-left'), 10) + container_max_offset > 0)
+                    {
+                        $container.animate({'margin-left': '-=271'});
+                    }
+                }
+            });
+            $this.find('.prev').click(function(e){
+                e.preventDefault();
+                if(Math.abs(parseInt($container.css('margin-left'), 10)%271) == 0)
+                {
+                    if(parseInt($container.css('margin-left'), 10) == 0)
+                    {
+                        $tip.text('已经是第一个了').show(0).delay(1000).hide(0);
+                    }
+                    if(parseInt($container.css('margin-left'), 10) < 0)
+                    {
+                        $container.animate({'margin-left': '+=271'});
+                    }
+                }
+            });
+        }
+    });
+// });
+</script>
+
+<script>
+$(document).ready(function(){
+	  loginShowDiv(2,3);
+	});
+
+	$(function(){
+	  $("#cancelMultiBox").click(function(){
+	    $('.multi-role-popbox .role-list').empty();
+	    $('.multi-role-popbox').hide();
+	    $('.gmask').hide();
+	    $('#FramePassword').focus();
+	    $('#FrameLoginBtn').html('登录');
+	  });
+	});
+
+    /* 多用户选择 列表dom操作 这块的js代码仅供参考 */
+    function processAccounts(accounts, $ul){
+        var lis = '';
+        for (i=0;i<accounts.length ;i++ )  {   
+             var accountId=accounts[i].split(",")[0];
+             var username=accounts[i].split(",")[1];
+             var ownerType=accounts[i].split(",")[2]; // 1:学生 2:教师 3:家长
+             var realname=accounts[i].split(",")[4];
+             var li = '<li>';
+             if(i == accounts.length - 1)
+             {
+                li = '<li class="last">';
+             }
+             switch(ownerType)
+             {
+                case '1':
+                    li += '<span class="avatar avatar-student"></span> 学生：';
+                    break;
+                case '2':
+                    li += '<span class="avatar avatar-teacher"></span> 教师：';
+                    break;
+                case '3':
+                    li += '<span class="avatar avatar-parent"></span> 家长：';
+                    break;
+                default:
+                    ;
+             }
+             li += '<span class="username">' + username + '</span>';
+             li += '<a class="btn btn-primary" href="javascript: $(\'#username\').val(\'' + username + '\');Pagelogin();">点击进入</a>';
+             li += '</li>';
+             lis += li;
+        }
+        $ul.append(lis);
+        
+        /* 登录多身份选择 hover ie6兼容问题处理 */
+        $ul.find('li').hover(
+            function(){
+                $(this).addClass('hover').siblings().removeClass('hover');
+            },
+            function(){
+                $(this).removeClass('hover');
+            }
+        );
+    }
+
+    var accounts=['id1,wpxtdingw,1,pwd1,名字1','id2,xsdingw,1,pwd2,名字2','id3,ls0001,2,pwd3,名字3','id4,p1130102969808370p1130102969808370,3,pwd4,名字4'];
+    processAccounts(accounts, $('.multi-role-popbox .role-list'));
+</script>
+</body>
+</html>

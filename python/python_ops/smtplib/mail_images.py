@@ -43,7 +43,7 @@ try:
 	server = smtplib.SMTP()
 	server.connect(HOST,"25")
 	server.starttls()
-	server.login("chenkj@winupon.com","86256876")
+	server.login("chenkj@winupon.com","***")
 	server.sendmail(FROM,[TO],msg.as_string())
 	server.quit()
 	print " 邮件发送成功! "
