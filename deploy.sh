@@ -1,6 +1,6 @@
 #!/bin/bash
-FTP_USERNAME=down
-FTP_PASSWORD=zdsoft.net.123
+FTP_USERNAME=***
+FTP_PASSWORD=***
 FTP_ADDR=ftp://$FTP_USERNAME:$FTP_PASSWORD@deploy.winupon.com
 
 INSTALL_HOME=/usr/local/src
