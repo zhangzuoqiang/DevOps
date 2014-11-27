@@ -22,7 +22,7 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 #连接堡垒机
 ssh.connect(hostname=blip,username=bluser,password=blpasswd)
 
-#new session
+#new session创建新的回话，开启命令调用
 channel=ssh.invoke_shell()
 channel.settimeout(10)
 
@@ -31,7 +31,7 @@ resp = ''
 #登录业务主机
 channel.send('ssh '+username+'@'+hostname+'\n')
 
-while not buff.endswith(passinfo):
+while not buff.endswith(passinfo): #校验输出串为password
     try:
         resp = channel.recv(9999)
     except Exception,e:
@@ -40,6 +40,7 @@ while not buff.endswith(passinfo):
         ssh.close()
         sys.exit()
     buff += resp
+    #串尾有 yes/no 发送yes
     if not buff.find('yes/no')==-1:
         channel.send('yes\n')
 	buff=''
@@ -48,9 +49,9 @@ while not buff.endswith(passinfo):
 channel.send(password+'\n')
 
 buff=''
-while not buff.endswith('# '):
+while not buff.endswith('# '):#校验输出串为#
     resp = channel.recv(9999)
-    if not resp.find(passinfo)==-1:
+    if not resp.find(passinfo)==-1: # 输出不是 password: 的为密码不正确
         print 'Error info: Authentication failed.'
         channel.close()
         ssh.close()
