@@ -8,9 +8,9 @@ import pycurl
 URL="http://www.wanpeng.com"
 if len(sys.argv) >1 :
 	URL = sys.argv[1]
-print URL
+#print URL
 #URL="http://open.wanpeng.com/app/getMyApps.htm?ticket=ticket&userId=8A18E09E4724FB9901476347B3AD4C7F&device=1"
-#URL="http://open180.weike.wanpeng.com/group/getShareContentByGroupId.htm?groupId=8A18E0A94840E3840148633AC4C32D99&userId=402881994563444701456434B2E1003F&ticket=ticket0"
+URL="http://open180.weike.wanpeng.com/group/getShareContentByGroupId.htm?groupId=8A18E0A94840E3840148633AC4C32D99&userId=402881994563444701456434B2E1003F&ticket=ticket0"
 #URL="http://www.google.com.hk"
 c = pycurl.Curl()
 c.setopt(pycurl.URL, URL)
