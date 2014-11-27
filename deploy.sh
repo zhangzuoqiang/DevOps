@@ -15,7 +15,7 @@ ORACLE_PW="zdsoft@net@123"
 export ORACLE_HOME=$ORACLE_APP/product/10.2.0/db_1
 
 ##安装依赖的包
-
+incal
 
 for PACKAGE in lftp binutils compat-gcc-* compat-gcc-*-c++ compat-libstdc++-*  \
     control-center gcc gcc-c++ glibc glibc-common libstdc++ libstdc++-devel  \

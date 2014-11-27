@@ -1,0 +1,10 @@
+root@192.168.22.11's password: zdsoft.net
+
+Last login: Thu Nov 27 15:01:16 2014 from 192.168.16.70
+[root@docker ~]# tar -czf /root/anaconda-ks.tar.gz /root/anaconda-ks.cfg 
+tar -czf /root/anaconda-ks.tar.gz /root/anaconda-ks.cfg 
+tar: Removing leading `/' from member names
+[root@docker ~]# exit
+root@192.168.22.11's password: zdsoft.net
+
+/home/anaconda-ks.tar.gz: Operation not supported

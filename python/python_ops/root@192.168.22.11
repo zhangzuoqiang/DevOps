@@ -1,0 +1,8 @@
+#!/usr/bin/python
+#Filename:pexpect_ssh.py
+
+import pexpect
+child = pexpect.spawn('scp pexpect_ssh.py root@192.168.22.11:.')
+child.expect('Password:')
+
+child.sendline(mypassword)
