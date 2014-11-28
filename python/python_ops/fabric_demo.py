@@ -4,20 +4,23 @@
 
 from fabric.api	import *
 
-env.hosts = ['172.16.197.130']
+env.hosts = ['192.168.22.11','192.168.22.12','192.168.23.8']
 env.port = "22"
 env.user = "root"
-env.password = "123456"
+env.password = "zdsoft.net"
 
+@task
 def host_type():
 	run('uname -s')
 
 @runs_once
+@task
 def local_task():
 	local('uname -a')
 
+@task
 def remote_task():
-	with cd("/tmp"):
+	with cd("/opt/data"):
 		run('ls -l')	
 
 #只有列表中的第一台host 触发，要求输入目录
