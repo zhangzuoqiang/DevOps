@@ -55,13 +55,13 @@ log-facility local7;
 #至少一个subnet
 subnet 192.168.161.0 netmask 255.255.255.0 {
 range 192.168.161.200 192.168.161.230;
-#option domain-name-servers ns1.internal.example.org;
-#option domain-name "internal.example.org";
-option routers 192.168.161.144;
-option broadcast-address 192.168.161.255;
+#option domain-name-servers ns1.internal.example.org; #dns server
+#option domain-name "internal.example.org";  #主机获取的hostname域
+option routers 192.168.161.144; #网关
+option broadcast-address 192.168.161.255; #广播
 default-lease-time 600;
 max-lease-time 7200;
-next-server 192.168.161.144; #可以是dns服务器，也可以是tftp
+next-server 192.168.161.144; #可以是dns服务器，也可以是tftp server
 filename "pxelinux.0";#使用引导
 }
 EOF
