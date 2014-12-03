@@ -1,0 +1,22 @@
+---
+- name: Configure webserver with nginx
+  hosts: docker
+  sudo: True
+  tasks:
+  - name: ensure nginx is at the latest version
+    yum: pkg=httpd state=latest
+  - name: mkdir  sites-available 
+    file: path=/etc/nginx/sites-available state=directory
+  - name: mkdir  sites-enabled
+    file: path=/etc/nginx/sites-enabled state=directory    
+  - name: copy nginx config file 
+    copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+  - name: enable Configure
+    file: > 
+     dest=/etc/nginx/sites-enabled/default 
+     src=/etc/nginx/sites-available/default 
+     state=link
+  - name: copy index.html
+    copy: src=files/index.html dest=/usr/share/nginx/html/index.html mode=0644
+  - name: restart nginx
+    service: name=nginx state=restarted

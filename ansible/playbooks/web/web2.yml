@@ -1,0 +1,35 @@
+---
+#Filename: web2.yml
+#ansible-playbook web2.yml -e 'uservar=root'
+#ansible-playbook web2.yml -e 'uservar=root' --tags init
+- hosts: vmware:192.168.22.12
+  remote_user: "{{ uservar }}"
+  vars:
+   softwares:
+    - python-setuptools
+    - httpd
+    - ntpdate
+  tasks:
+  - name: run hostname
+    shell: hostname
+    ignore_errors: True
+    register: result
+  - debug: msg= "{{ result.stdout }}"
+
+  - name: install mysql and httpd
+    yum: pkg= {{item}} state=latest
+    sudo: yes
+    with_items:
+     - "{{ softwares }}
+    tags: init
+
+  - name: write the apache config file
+    template: src=/srv/httpd.j2 dest=/etc/httpd.conf
+    notify:
+    - restart apache
+  - name: ensure apache is running
+    service: name=httpd state=started
+    
+  handlers:
+  - name: restart apache
+    service: name=httpd state=restarted

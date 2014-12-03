@@ -1,0 +1,7 @@
+---
+- hosts: tomcat-servers
+  user: root
+
+  roles:
+  	- selinux
+  	- tomcat
