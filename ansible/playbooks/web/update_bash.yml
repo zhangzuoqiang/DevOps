@@ -1,0 +1,12 @@
+---
+#time ansible-playbook update_bash.yml  --extra-vars "host=172.17.0.9 user=root" -k
+- hosts: "{{ host }}"
+  remote_user: "{{ user }}"
+  gather_facts: True
+  tasks:
+  - name: update bash in redhat 6 version
+    yum: name=http://mirrors.aliyun.com/centos/6/os/x86_64/Packages/bash-4.1.2-29.el6.x86_64.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_version|int >=6
+  - name: update bash in redhat 5 version
+    yum: name=http://mirrors.aliyun.com/centos/5/os/x86_64/CentOS/bash-3.2-32.el5_9.1.x86_64.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_version|int <=5

@@ -23,6 +23,7 @@ def get_responses():
 		'http://www.tmall.com'
 	]
 	start = time.time()
+    end = time.time()
 	threads = []
 	for url in urls:
 		t = UrlThread(url)
